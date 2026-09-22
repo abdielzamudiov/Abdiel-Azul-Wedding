@@ -1,0 +1,90 @@
+.invitation {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  height: 100svh;
+  min-height: 100svh;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #fffdf8;
+  background: url('https://pub-5681aa7e98a54b3c951fae89fac431b6.r2.dev/nosotros-tontiando.jpg')
+    center / cover no-repeat;
+}
+
+.invitation__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, rgba(27, 22, 19, 0.58), rgba(27, 22, 19, 0.2) 55%, rgba(27, 22, 19, 0.48));
+}
+
+.invitation__message {
+  box-sizing: border-box;
+  width: min(680px, 100%);
+  padding: clamp(56px, 10vw, 112px) 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 253, 248, 0.65);
+  outline: 1px solid rgba(255, 253, 248, 0.25);
+  outline-offset: 10px;
+  animation: appear 1.2s ease-out both;
+}
+
+.invitation__eyebrow,
+.invitation__subtitle {
+  margin: 0;
+  font-family: Georgia, serif;
+  letter-spacing: 0.18em;
+}
+
+.invitation__eyebrow {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.invitation h1 {
+  margin: 18px 0 12px;
+  color: inherit;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(3rem, 8vw, 6.4rem);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.invitation__subtitle {
+  font-size: 0.95rem;
+}
+
+.invitation__ornament {
+  display: block;
+  margin-top: 28px;
+  font-size: 1.15rem;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 520px) {
+  .invitation {
+    padding: 24px 28px;
+  }
+
+  .invitation__message {
+    padding-inline: 16px;
+  }
+
+  .invitation__subtitle {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+  }
+}
