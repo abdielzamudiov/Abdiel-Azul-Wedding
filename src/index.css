@@ -6,11 +6,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  min-height: 100%;
+  overflow-y: auto;
+}
+
 #root {
   min-height: 100svh;
 }
 
 body {
   margin: 0;
-  overflow: hidden;
+  min-width: 320px;
+  min-height: 100svh;
+  overflow-y: auto;
 }

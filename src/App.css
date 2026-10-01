@@ -2,12 +2,13 @@
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  height: 100svh;
   min-height: 100svh;
-  padding: 24px;
-  display: grid;
-  place-items: center;
-  overflow: hidden;
+  padding: clamp(40px, 8vh, 88px) 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(42px, 8vh, 72px);
   color: #fffdf8;
   background: url('https://pub-5681aa7e98a54b3c951fae89fac431b6.r2.dev/nosotros-tontiando.jpg')
     center / cover no-repeat;
@@ -76,7 +77,8 @@
 
 @media (max-width: 520px) {
   .invitation {
-    padding: 24px 28px;
+    padding: 40px 22px;
+    gap: 52px;
   }
 
   .invitation__message {
