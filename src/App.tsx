@@ -1,34 +1,45 @@
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import './App.css'
-import RsvpForm, { type RsvpResponse } from './components/RsvpForm'
+import HomePage from './pages/HomePage'
+import InvitationDetailPage from './pages/InvitationDetailPage'
+import CreateInvitePage from './pages/CreateInvitePage'
+import NewInvitationPage from './pages/NewInvitationPage'
+import AdminLoginPage from './pages/AdminLoginPage'
+import { AdminAuthProvider } from './auth/AdminAuth'
+import { useAdminAuth } from './auth/AdminAuthContext'
 
-const sampleGuests = [
-  { id: 'guest-1', name: 'María López', status: 'accepted' as const },
-  { id: 'guest-2', name: 'Carlos López', status: null },
-  { id: 'guest-3', name: 'Sofía López', status: 'rejected' as const },
-]
+function ProtectedAdminRoute() {
+  const { token, isInitializing } = useAdminAuth()
+  const location = useLocation()
 
-function App() {
-  function handleRsvpSubmit(response: RsvpResponse) {
-    console.log('RSVP response:', response)
+  if (isInitializing) {
+    return <main className="admin-session-check" role="status">Verificando sesión...</main>
   }
 
+  if (!token) {
+    return <Navigate to="/admin/login" replace state={{ from: location }} />
+  }
+
+  return <Outlet />
+}
+
+function App() {
   return (
-    <main className="invitation">
-      <div className="invitation__overlay" aria-hidden="true" />
-      <section className="invitation__message" aria-labelledby="invitation-title">
-        <p className="invitation__eyebrow">Con mucho amor</p>
-        <h1 id="invitation-title">Esta es mi invitación</h1>
-        <p className="invitation__subtitle">Para celebrar juntos un momento especial</p>
-        <span className="invitation__ornament" aria-hidden="true">✦</span>
-      </section>
-      <RsvpForm
-        invitationId="sample-invitation"
-        guestCount={sampleGuests.length}
-        guests={sampleGuests}
-        responseDeadlinePassed={false}
-        onSubmit={handleRsvpSubmit}
-      />
-    </main>
+    <AdminAuthProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="/admin" element={<CreateInvitePage />} />
+          <Route path="/admin/invitations/new" element={<NewInvitationPage />} />
+          <Route path="/create-invite" element={<Navigate to="/admin/invitations/new" replace />} />
+        </Route>
+        <Route path="/invitation" element={<InvitationDetailPage />} />
+        <Route path="/invitation/:id" element={<InvitationDetailPage />} />
+        <Route path="/invitaton/:id" element={<InvitationDetailPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </AdminAuthProvider>
   )
 }
 

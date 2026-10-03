@@ -4,16 +4,19 @@ import './RsvpForm.css'
 export type RsvpStatus = 'accepted' | 'rejected' | null
 
 export interface RsvpGuest {
-  id: string
+  id?: string
   name: string
-  status: RsvpStatus
+  status?: RsvpStatus
+  attending?: boolean
+  answered?: boolean
 }
 
 export interface RsvpResponse {
   invitationId: string
   guests: Array<{
-    id: string
+    id?: string
     name: string
+    attending: boolean | null
     status: RsvpStatus
   }>
 }
@@ -33,19 +36,37 @@ function RsvpForm({
   responseDeadlinePassed,
   onSubmit,
 }: RsvpFormProps) {
+  const normalizedGuests = guests.map((guest) => {
+    const status =
+      guest.status ??
+      (guest.attending === true ? 'accepted' : guest.attending === false && guest.answered ? 'rejected' : null)
+
+    return {
+      ...guest,
+      key: guest.id ?? guest.name,
+      status,
+    }
+  })
+
   const [attendance, setAttendance] = useState<Record<string, RsvpStatus>>(() =>
-    Object.fromEntries(guests.map((guest) => [guest.id, guest.status])),
+    Object.fromEntries(normalizedGuests.map((guest) => [guest.key, guest.status])),
   )
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    onSubmit({
-      invitationId,
-      guests: guests.map((guest) => ({
+
+    const submittedGuests = normalizedGuests
+      .filter((guest) => attendance[guest.key] !== null)
+      .map((guest) => ({
         id: guest.id,
         name: guest.name,
-        status: attendance[guest.id] ?? null,
-      })),
+        attending: attendance[guest.key] === 'accepted',
+        status: attendance[guest.key] ?? null,
+      }))
+
+    onSubmit({
+      invitationId,
+      guests: submittedGuests,
     })
   }
 
@@ -63,19 +84,19 @@ function RsvpForm({
       <form className="rsvp__form" onSubmit={handleSubmit}>
         <fieldset className="rsvp__list" disabled={responseDeadlinePassed}>
           <legend className="rsvp__legend">Indica quiénes asistirán</legend>
-          {guests.map((guest) => (
-            <div className="rsvp__guest" key={guest.id}>
+          {normalizedGuests.map((guest) => (
+            <div className="rsvp__guest" key={guest.key}>
               <span className="rsvp__name">{guest.name}</span>
               <div className="rsvp__choices">
                 <label className="rsvp__choice">
                   <input
                     aria-label={`${guest.name}: sí asistirá`}
-                    checked={attendance[guest.id] === 'accepted'}
+                    checked={attendance[guest.key] === 'accepted'}
                     className="rsvp__checkbox"
                     onChange={(event) =>
                       setAttendance((current) => ({
                         ...current,
-                        [guest.id]: event.target.checked ? 'accepted' : null,
+                        [guest.key]: event.target.checked ? 'accepted' : null,
                       }))
                     }
                     type="checkbox"
@@ -85,12 +106,12 @@ function RsvpForm({
                 <label className="rsvp__choice">
                   <input
                     aria-label={`${guest.name}: no asistirá`}
-                    checked={attendance[guest.id] === 'rejected'}
+                    checked={attendance[guest.key] === 'rejected'}
                     className="rsvp__checkbox"
                     onChange={(event) =>
                       setAttendance((current) => ({
                         ...current,
-                        [guest.id]: event.target.checked ? 'rejected' : null,
+                        [guest.key]: event.target.checked ? 'rejected' : null,
                       }))
                     }
                     type="checkbox"

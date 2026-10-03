@@ -143,6 +143,27 @@
   text-align: center;
 }
 
+.rsvp__success,
+.rsvp__error {
+  width: min(560px, 100%);
+  margin: 0 auto 18px;
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 0.92rem;
+}
+
+.rsvp__success {
+  background: rgba(73, 99, 81, 0.18);
+  border: 1px solid rgba(73, 99, 81, 0.75);
+  color: #fffdf8;
+}
+
+.rsvp__error {
+  background: rgba(139, 97, 77, 0.16);
+  border: 1px solid rgba(139, 97, 77, 0.8);
+  color: #ffefea;
+}
+
 @media (max-width: 420px) {
   .rsvp {
     padding-block: 26px 30px;
