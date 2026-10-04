@@ -40,6 +40,12 @@ export function InvitationDetailPage() {
   const [loading, setLoading] = useState(Boolean(invitationId))
   const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const [isOpened, setIsOpened] = useState(false)
+
+  const handleOpenInvitation = () => {
+    setIsOpened(true)
+    window.dispatchEvent(new CustomEvent('play-wedding-music'))
+  }
 
   useEffect(() => {
     if (!invitationId) {
@@ -186,82 +192,87 @@ export function InvitationDetailPage() {
       {/* Floating Background Audio Player */}
       <AudioPlayer />
 
-      {/* Hero Cover Banner: Couple Photo Background + Couple Names + Countdown Timer */}
-      <HeroCover />
+      {/* Hero Cover Banner: Fullscreen Unopened Cover OR Revealed Header */}
+      <HeroCover isOpened={isOpened} onOpen={handleOpenInvitation} />
 
-      {/* Couple Photo & Bible Quote Section with Animated Pastel Floral Frame */}
-      <section className="relative z-10">
-        <CoupleSection />
-      </section>
+      {/* Revealed Content Sections (Only displayed when isOpened = true) */}
+      {isOpened && (
+        <div className="animate-fade-in-smooth">
+          {/* Couple Photo & Bible Quote Section */}
+          <section id="couple-section" className="relative z-10">
+            <CoupleSection />
+          </section>
 
-      {/* Event Schedule & Itinerary */}
-      <section className="relative z-10">
-        <ItineraryTimeline />
-      </section>
+          {/* Event Schedule & Itinerary */}
+          <section className="relative z-10">
+            <ItineraryTimeline />
+          </section>
 
-      {/* Venue & Logistics + Google Maps Embed for Jardín Belcanto */}
-      <section className="relative z-10">
-        <VenueLogistics />
-      </section>
+          {/* Venue & Logistics + Google Maps Embed */}
+          <section className="relative z-10">
+            <VenueLogistics />
+          </section>
 
-      {/* Dress Code Section */}
-      <section className="relative z-10">
-        <DressCodeSection />
-      </section>
+          {/* Dress Code Section */}
+          <section className="relative z-10">
+            <DressCodeSection />
+          </section>
 
-      {/* Gift Registry & Bank Details */}
-      <section className="relative z-10">
-        <GiftRegistrySection />
-      </section>
+          {/* Gift Registry & Bank Details */}
+          <section className="relative z-10">
+            <GiftRegistrySection />
+          </section>
 
-      {/* RSVP Section: Personalized Paper Invitation Card & Form */}
-      <section id="rsvp-section" className="pt-8 relative z-10">
-        <div className="text-center mb-4 px-4">
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
-            Tu Invitación Personal
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)]">
-            Confirmación de Asistencia
-          </h2>
-          <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-50 my-2" />
+          {/* RSVP Section: Personalized Paper Invitation Card & Form */}
+          <section id="rsvp-section" className="pt-8 relative z-10">
+            <div className="text-center mb-4 px-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
+                Tu Invitación Personal
+              </p>
+              <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)]">
+                Confirmación de Asistencia
+              </h2>
+              <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-50 my-2" />
+            </div>
+
+            {/* Paper Invitation Card in RSVP Section */}
+            <HeroInvitationCard
+              coupleNames={WEDDING_DETAILS.coupleNames}
+              dateString={WEDDING_DETAILS.dateString}
+              timeString={WEDDING_DETAILS.timeString}
+              venueName={WEDDING_DETAILS.venueName}
+              cityState={WEDDING_DETAILS.cityState}
+              guestName={guestDisplayName}
+              guestCount={totalPasses}
+            />
+
+            <RsvpForm
+              invitationId={invitation?._id || 'demo-invitation'}
+              guestCount={totalPasses}
+              guests={peopleForRsvp}
+              responseDeadlinePassed={false}
+              onSubmit={handleSubmit}
+              isSubmitting={submitState === 'submitting'}
+              submitSuccess={submitState === 'success'}
+              submitMessage={submitMessage}
+            />
+          </section>
+
+          {/* Elegant Monet Footer */}
+          <footer className="w-full max-w-4xl mx-auto px-4 py-8 text-center border-t border-[var(--border-subtle)] mt-8 space-y-4 relative z-10">
+            <WaterLilyMotif className="w-24 h-auto mx-auto opacity-70" />
+            <h3 className="font-serif italic text-2xl text-[var(--text-main)]">
+              {WEDDING_DETAILS.coupleNames}
+            </h3>
+            <p className="text-xs uppercase tracking-[0.18em] text-[var(--text-muted)]">
+              {WEDDING_DETAILS.dateString} • {WEDDING_DETAILS.cityState}
+            </p>
+            <p className="text-[11px] text-[var(--color-moss)] pt-4 italic">
+              Con todo nuestro amor, esperamos contar con tu valiosa presencia en {WEDDING_DETAILS.venueName}.
+            </p>
+          </footer>
         </div>
-
-        {/* Paper Invitation Card in RSVP Section */}
-        <HeroInvitationCard
-          coupleNames={WEDDING_DETAILS.coupleNames}
-          dateString={WEDDING_DETAILS.dateString}
-          timeString={WEDDING_DETAILS.timeString}
-          venueName={WEDDING_DETAILS.venueName}
-          cityState={WEDDING_DETAILS.cityState}
-          guestName={guestDisplayName}
-          guestCount={totalPasses}
-        />
-
-        <RsvpForm
-          invitationId={invitation?._id || 'demo-invitation'}
-          guestCount={totalPasses}
-          guests={peopleForRsvp}
-          responseDeadlinePassed={false}
-          onSubmit={handleSubmit}
-          isSubmitting={submitState === 'submitting'}
-          submitSuccess={submitState === 'success'}
-          submitMessage={submitMessage}
-        />
-      </section>
-
-      {/* Elegant Monet Footer */}
-      <footer className="w-full max-w-4xl mx-auto px-4 py-8 text-center border-t border-[var(--border-subtle)] mt-8 space-y-4 relative z-10">
-        <WaterLilyMotif className="w-24 h-auto mx-auto opacity-70" />
-        <h3 className="font-serif italic text-2xl text-[var(--text-main)]">
-          {WEDDING_DETAILS.coupleNames}
-        </h3>
-        <p className="text-xs uppercase tracking-[0.18em] text-[var(--text-muted)]">
-          {WEDDING_DETAILS.dateString} • {WEDDING_DETAILS.cityState}
-        </p>
-        <p className="text-[11px] text-[var(--color-moss)] pt-4 italic">
-          Con todo nuestro amor, esperamos contar con tu valiosa presencia en {WEDDING_DETAILS.venueName}.
-        </p>
-      </footer>
+      )}
     </div>
   )
 }

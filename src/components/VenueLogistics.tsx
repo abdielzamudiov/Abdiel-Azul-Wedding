@@ -24,26 +24,43 @@ export function VenueLogistics({
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
       'PRODID:-//Monet Giverny Wedding//NONSGML v1.0//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
       'BEGIN:VEVENT',
       'SUMMARY:Boda ' + WEDDING_DETAILS.coupleNames,
-      'DESCRIPTION:Acompañanos a celebrar la boda de ' + WEDDING_DETAILS.coupleNames + ' en ' + venueName + '.',
+      'DESCRIPTION:Celebra con nosotros nuestra boda en ' + venueName + '.',
       'LOCATION:' + venueName + ', ' + address + ', ' + cityState,
       'DTSTART:' + formattedDate,
-      'DTEND:20261115T020000Z',
+      'DTEND:20261115T080000Z',
+      'STATUS:CONFIRMED',
       'END:VEVENT',
       'END:VCALENDAR',
-    ].join('\n')
+    ].join('\r\n')
 
-    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' })
-    const link = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.setAttribute('download', 'Boda-' + WEDDING_DETAILS.brideName + '-y-' + WEDDING_DETAILS.groomName + '.ics')
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    const isIOS =
+      typeof navigator !== 'undefined' &&
+      (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+
+    if (isIOS) {
+      const encodedData = encodeURIComponent(icsData)
+      window.location.href = `data:text/calendar;charset=utf8,${encodedData}`
+    } else {
+      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' })
+      const link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.setAttribute('download', 'Boda-' + WEDDING_DETAILS.brideName + '-y-' + WEDDING_DETAILS.groomName + '.ics')
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
   }
 
-  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+  const mapsAppUrl =
+    googleMapsUrl ||
+    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${venueName}, ${address}`)}`
+
+  const googleCalendarUrl = `https://calendar.google.com/calendar/r/eventedit?text=${encodeURIComponent(
     'Boda ' + WEDDING_DETAILS.coupleNames,
   )}&dates=20261114T220000Z/20261115T080000Z&details=${encodeURIComponent(
     'Celebra con nosotros nuestra boda en ' + venueName + '.',
@@ -109,7 +126,7 @@ export function VenueLogistics({
 
           <div>
             <a
-              href={googleMapsUrl}
+              href={mapsAppUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center w-full px-5 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.14em] bg-[var(--color-sage)] text-white hover:bg-[var(--color-moss)] transition-all duration-300 shadow-sm cursor-pointer"

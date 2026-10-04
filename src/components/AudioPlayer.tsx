@@ -20,12 +20,16 @@ export function AudioPlayer({
     // 1. If custom MP3/Audio file URL is provided
     if (src) {
       if (!audioRef.current) {
-        audioRef.current = new Audio(src)
-        audioRef.current.loop = true
+        const audio = new Audio(encodeURI(src))
+        audio.loop = true
+        audio.preload = 'auto'
+        audio.setAttribute('playsinline', 'true')
+        audio.setAttribute('webkit-playsinline', 'true')
+        audioRef.current = audio
       }
       if (isPlaying) {
         audioRef.current.play().catch(() => {
-          // Autoplay blocked by browser policy until first click
+          // Autoplay blocked on load by browser policy: waiting for first user activation
         })
       } else {
         audioRef.current.pause()
@@ -111,32 +115,82 @@ export function AudioPlayer({
     }
   }, [isPlaying, src])
 
-  // Handle browser autoplay policy: un-mute / play on first user tap anywhere on screen if blocked
+  // Handle browser autoplay policy: start audio on first user tap, click, or keypress anywhere on screen
   useEffect(() => {
     if (!autoPlay) return
 
     const handleFirstInteraction = () => {
-      if (src && audioRef.current) {
-        audioRef.current.play().catch(() => {})
-      } else if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
-        audioCtxRef.current.resume().catch(() => {})
+      if (src) {
+        if (audioRef.current && audioRef.current.paused) {
+          audioRef.current
+            .play()
+            .then(() => setIsPlaying(true))
+            .catch(() => {})
+        }
+      } else {
+        if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+          audioCtxRef.current.resume().catch(() => {})
+        }
+        setIsPlaying(true)
       }
-      setIsPlaying(true)
-      window.removeEventListener('click', handleFirstInteraction)
-      window.removeEventListener('touchstart', handleFirstInteraction)
+
+      events.forEach((evt) => {
+        window.removeEventListener(evt, handleFirstInteraction, true)
+        document.removeEventListener(evt, handleFirstInteraction, true)
+      })
     }
 
-    window.addEventListener('click', handleFirstInteraction, { once: true })
-    window.addEventListener('touchstart', handleFirstInteraction, { once: true })
+    const events = ['click', 'pointerdown', 'mousedown', 'keydown', 'touchstart', 'touchend']
+
+    events.forEach((evt) => {
+      window.addEventListener(evt, handleFirstInteraction, { capture: true })
+      document.addEventListener(evt, handleFirstInteraction, { capture: true })
+    })
 
     return () => {
-      window.removeEventListener('click', handleFirstInteraction)
-      window.removeEventListener('touchstart', handleFirstInteraction)
+      events.forEach((evt) => {
+        window.removeEventListener(evt, handleFirstInteraction, true)
+        document.removeEventListener(evt, handleFirstInteraction, true)
+      })
     }
   }, [autoPlay, src])
 
+  // Listen for custom trigger event when Ver Invitación is clicked
+  useEffect(() => {
+    const handleCustomPlay = () => {
+      if (src && audioRef.current) {
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => {})
+      } else {
+        if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+          audioCtxRef.current.resume().catch(() => {})
+        }
+        setIsPlaying(true)
+      }
+    }
+
+    window.addEventListener('play-wedding-music', handleCustomPlay)
+    return () => {
+      window.removeEventListener('play-wedding-music', handleCustomPlay)
+    }
+  }, [src])
+
   const togglePlay = () => {
-    setIsPlaying((prev) => !prev)
+    if (src && audioRef.current) {
+      if (audioRef.current.paused) {
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => {})
+      } else {
+        audioRef.current.pause()
+        setIsPlaying(false)
+      }
+    } else {
+      setIsPlaying((prev) => !prev)
+    }
   }
 
   return (

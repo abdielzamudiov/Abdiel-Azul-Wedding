@@ -20,7 +20,7 @@ export const WEDDING_DETAILS = {
 
   // Background Music Configuration
   // Put an MP3 file path here (e.g., '/music/cancion-boda.mp3') or leave empty to use ambient piano synth
-  musicUrl: '',
+  musicUrl: '/Akasa Requiem Theme.mp3',
   musicAutoPlay: true, // Start music automatically on page visit
 
   // Venue & Google Maps Information
