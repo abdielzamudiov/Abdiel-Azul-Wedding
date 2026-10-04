@@ -8,7 +8,11 @@ export function DressCodeSection() {
     { name: 'Water Lily Pink', hex: '#E8C5C8' },
     { name: 'Periwinkle', hex: '#B4C5D4' },
     { name: 'Soft Primrose', hex: '#F3E8C8' },
-    { name: 'Willow Moss', hex: '#5E6E5A' },
+    { name: 'Giverny Iris', hex: '#7B6B8D' },
+    { name: 'Twilight Lavender', hex: '#9B8CB4' },
+    { name: 'Night Garden Blue', hex: '#4B6B82' },
+    { name: 'Dusty Plum Rose', hex: '#A87B8E' },
+    { name: 'Eucalyptus', hex: '#94A692' },
   ]
 
   return (

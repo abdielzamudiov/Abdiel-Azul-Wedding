@@ -53,7 +53,7 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
             <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/90 font-medium font-[var(--font-sans)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)] max-w-md mx-auto">
               Tienen el honor de invitarle a celebrar su boda
             </p>
-            <div className="pt-2">
+            <div className="pt-2 flex flex-col items-center gap-3">
               <button
                 onClick={onOpen}
                 className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-xs font-semibold uppercase tracking-[0.22em] bg-white/20 hover:bg-white/35 text-white backdrop-blur-md border border-white/50 shadow-2xl transition-all duration-300 transform hover:scale-108 cursor-pointer active:scale-98 group"
@@ -61,6 +61,10 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
                 <span>Ver Invitación</span>
                 <span className="text-base group-hover:translate-x-1 transition-transform">✉️</span>
               </button>
+              <p className="text-[11px] text-white/80 font-[var(--font-sans)] tracking-wide flex items-center justify-center gap-1.5 pt-1 drop-shadow-[0_1px_4px_rgba(0,0,0,0.9)]">
+                <span>🎵</span>
+                <span>Al abrir se reproducirá música de fondo</span>
+              </p>
             </div>
           </div>
         ) : (

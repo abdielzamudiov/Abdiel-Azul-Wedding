@@ -165,14 +165,6 @@ export function VenueLogistics({
               Guarda este evento en tu calendario personal para recibir recordatorios automáticos.
             </p>
 
-            <div className="bg-[var(--surface-tint)] p-4 rounded-xl border border-[var(--border-subtle)] space-y-1">
-              <p className="text-xs uppercase tracking-wider text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
-                💡 Recomendación de Hospedaje
-              </p>
-              <p className="text-xs text-[var(--text-muted)] font-[var(--font-sans)]">
-                Te sugerimos reservar tu hospedaje con anticipación en la zona centro de Mazatlán.
-              </p>
-            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3 pt-2">
@@ -188,7 +180,7 @@ export function VenueLogistics({
               onClick={downloadIcsFile}
               className="inline-flex items-center justify-center px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.12em] bg-[var(--color-sage)] text-white hover:bg-[var(--color-moss)] transition-all duration-300 text-center cursor-pointer shadow-sm"
             >
-              Descargar Evento iCal / Apple
+              Agregar a Apple / iPhone Calendar
             </button>
           </div>
         </div>

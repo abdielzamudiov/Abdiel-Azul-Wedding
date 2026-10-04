@@ -5,11 +5,13 @@ import { WEDDING_DETAILS } from '../config/weddingDetails'
 interface AudioPlayerProps {
   src?: string
   autoPlay?: boolean
+  visible?: boolean
 }
 
 export function AudioPlayer({
   src = WEDDING_DETAILS.musicUrl,
   autoPlay = WEDDING_DETAILS.musicAutoPlay,
+  visible = true,
 }: AudioPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   const audioRef = useRef<HTMLAudioElement | null>(null)
@@ -25,6 +27,14 @@ export function AudioPlayer({
         audio.preload = 'auto'
         audio.setAttribute('playsinline', 'true')
         audio.setAttribute('webkit-playsinline', 'true')
+
+        // Ensure seamless start as soon as enough buffer is loaded on slow connections
+        audio.addEventListener('canplay', () => {
+          if (isPlaying && audio.paused) {
+            audio.play().catch(() => {})
+          }
+        })
+
         audioRef.current = audio
       }
       if (isPlaying) {
@@ -194,7 +204,13 @@ export function AudioPlayer({
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div
+      className={`fixed bottom-6 right-6 z-50 transition-all duration-700 ease-out ${
+        visible
+          ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
+          : 'opacity-0 translate-y-4 scale-90 pointer-events-none'
+      }`}
+    >
       <button
         onClick={togglePlay}
         className={`group relative flex items-center gap-2.5 px-4 py-2.5 rounded-full shadow-lg transition-all duration-300 border cursor-pointer ${

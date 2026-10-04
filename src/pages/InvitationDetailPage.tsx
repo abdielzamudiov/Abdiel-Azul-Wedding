@@ -189,8 +189,8 @@ export function InvitationDetailPage() {
         />
       </div>
 
-      {/* Floating Background Audio Player */}
-      <AudioPlayer />
+      {/* Floating Background Audio Player (Animates into view when invitation is opened) */}
+      <AudioPlayer visible={isOpened} />
 
       {/* Hero Cover Banner: Fullscreen Unopened Cover OR Revealed Header */}
       <HeroCover isOpened={isOpened} onOpen={handleOpenInvitation} />

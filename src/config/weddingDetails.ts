@@ -93,8 +93,9 @@ export const WEDDING_DETAILS = {
   ] as ItineraryConfigItem[],
 
   // Dress Code
-  dressCodeTitle: 'Garden Formal / Etiqueta Jardín',
-  dressCodeNote: 'Les sugerimos vestir prendas formales en tonos pastel, tierra o inspirados en la naturaleza.',
+  dressCodeTitle: 'Garden Formal Nocturno / Etiqueta Jardín de Noche',
+  dressCodeNote:
+    'Nuestra boda se celebrará al aire libre por la tarde-noche. Les sugerimos vestimenta formal en tonos inspirados en un jardín nocturno (púrpura, lavanda crepúsculo, azul noche, ciruela, eucalipto) o tonos pastel suaves.',
   dressCodeWarning: '🌸 Les pedimos amablemente reservar los tonos blanco, marfil y beige exclusivamente para la novia.',
 
   // Gift Registry & Bank Accounts
