@@ -168,11 +168,11 @@ export function InvitationDetailPage() {
     return (
       <main className="min-h-screen bg-[var(--bg-canvas)] flex flex-col items-center justify-center p-6 text-center">
         <WaterLilyMotif className="w-24 h-auto mb-4 animate-pulse-soft" />
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-medium font-[var(--font-sans)]">
-          Cargando Invitación
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
+          {WEDDING_DETAILS.coupleNames}
         </p>
-        <h1 className="text-3xl font-serif font-medium text-[var(--text-main)] mt-2">
-          Preparando la Experiencia Giverny...
+        <h1 className="text-2xl sm:text-3xl font-serif font-medium text-[var(--text-main)] mt-2">
+          Cargando los detalles de nuestro gran día...
         </h1>
       </main>
     )
@@ -223,40 +223,42 @@ export function InvitationDetailPage() {
             <GiftRegistrySection />
           </section>
 
-          {/* RSVP Section: Personalized Paper Invitation Card & Form */}
-          <section id="rsvp-section" className="pt-8 relative z-10">
-            <div className="text-center mb-4 px-4">
-              <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
-                Tu Invitación Personal
-              </p>
-              <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)]">
-                Confirmación de Asistencia
-              </h2>
-              <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-50 my-2" />
-            </div>
+          {/* RSVP Section: Personalized Paper Invitation Card & Form (Only rendered for valid invitations) */}
+          {Boolean(invitation?._id) && (
+            <section id="rsvp-section" className="pt-8 relative z-10">
+              <div className="text-center mb-4 px-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
+                  Tu Invitación Personal
+                </p>
+                <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)]">
+                  Confirmación de Asistencia
+                </h2>
+                <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-50 my-2" />
+              </div>
 
-            {/* Paper Invitation Card in RSVP Section */}
-            <HeroInvitationCard
-              coupleNames={WEDDING_DETAILS.coupleNames}
-              dateString={WEDDING_DETAILS.dateString}
-              timeString={WEDDING_DETAILS.timeString}
-              venueName={WEDDING_DETAILS.venueName}
-              cityState={WEDDING_DETAILS.cityState}
-              guestName={guestDisplayName}
-              guestCount={totalPasses}
-            />
+              {/* Paper Invitation Card in RSVP Section */}
+              <HeroInvitationCard
+                coupleNames={WEDDING_DETAILS.coupleNames}
+                dateString={WEDDING_DETAILS.dateString}
+                timeString={WEDDING_DETAILS.timeString}
+                venueName={WEDDING_DETAILS.venueName}
+                cityState={WEDDING_DETAILS.cityState}
+                guestName={guestDisplayName}
+                guestCount={totalPasses}
+              />
 
-            <RsvpForm
-              invitationId={invitation?._id || 'demo-invitation'}
-              guestCount={totalPasses}
-              guests={peopleForRsvp}
-              responseDeadlinePassed={false}
-              onSubmit={handleSubmit}
-              isSubmitting={submitState === 'submitting'}
-              submitSuccess={submitState === 'success'}
-              submitMessage={submitMessage}
-            />
-          </section>
+              <RsvpForm
+                invitationId={invitation?._id || ''}
+                guestCount={totalPasses}
+                guests={peopleForRsvp}
+                responseDeadlinePassed={false}
+                onSubmit={handleSubmit}
+                isSubmitting={submitState === 'submitting'}
+                submitSuccess={submitState === 'success'}
+                submitMessage={submitMessage}
+              />
+            </section>
+          )}
 
           {/* Elegant Monet Footer */}
           <footer className="w-full max-w-4xl mx-auto px-4 py-8 text-center border-t border-[var(--border-subtle)] mt-8 space-y-4 relative z-10">
