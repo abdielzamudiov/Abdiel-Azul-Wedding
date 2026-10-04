@@ -5,6 +5,7 @@ import { WEDDING_DETAILS } from '../config/weddingDetails'
 import { AudioPlayer } from '../components/AudioPlayer'
 import { HeroCover } from '../components/HeroCover'
 import { CoupleSection } from '../components/CoupleSection'
+import { PhotoGallerySection } from '../components/PhotoGallerySection'
 import { ItineraryTimeline } from '../components/ItineraryTimeline'
 import { VenueLogistics } from '../components/VenueLogistics'
 import { DressCodeSection } from '../components/DressCodeSection'
@@ -201,6 +202,11 @@ export function InvitationDetailPage() {
           {/* Couple Photo & Bible Quote Section */}
           <section id="couple-section" className="relative z-10">
             <CoupleSection />
+          </section>
+
+          {/* Photo Gallery Section */}
+          <section className="relative z-10">
+            <PhotoGallerySection />
           </section>
 
           {/* Event Schedule & Itinerary */}
