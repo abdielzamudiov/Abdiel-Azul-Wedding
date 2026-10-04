@@ -187,6 +187,42 @@ export function AudioPlayer({
     }
   }, [src])
 
+  // Pause audio automatically when user locks screen, minimizes browser, or switches tabs on mobile/desktop
+  useEffect(() => {
+    let wasPlayingBeforeHidden = false
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (src && audioRef.current && !audioRef.current.paused) {
+          wasPlayingBeforeHidden = true
+          audioRef.current.pause()
+        } else if (!src && isPlaying) {
+          wasPlayingBeforeHidden = true
+          if (audioCtxRef.current) {
+            audioCtxRef.current.suspend()
+          }
+        }
+      } else {
+        if (wasPlayingBeforeHidden) {
+          wasPlayingBeforeHidden = false
+          if (src && audioRef.current && isPlaying) {
+            audioRef.current.play().catch(() => {})
+          } else if (!src && isPlaying && audioCtxRef.current) {
+            audioCtxRef.current.resume().catch(() => {})
+          }
+        }
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('pagehide', handleVisibilityChange)
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('pagehide', handleVisibilityChange)
+    }
+  }, [isPlaying, src])
+
   const togglePlay = () => {
     if (src && audioRef.current) {
       if (audioRef.current.paused) {
