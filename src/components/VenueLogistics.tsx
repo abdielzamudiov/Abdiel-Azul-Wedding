@@ -37,23 +37,17 @@ export function VenueLogistics({
       'END:VCALENDAR',
     ].join('\r\n')
 
-    const isIOS =
-      typeof navigator !== 'undefined' &&
-      (/iPad|iPhone|iPod/.test(navigator.userAgent) ||
-        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
-
-    if (isIOS) {
-      const encodedData = encodeURIComponent(icsData)
-      window.location.href = `data:text/calendar;charset=utf8,${encodedData}`
-    } else {
-      const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' })
-      const link = document.createElement('a')
-      link.href = window.URL.createObjectURL(blob)
-      link.setAttribute('download', 'Boda-' + WEDDING_DETAILS.brideName + '-y-' + WEDDING_DETAILS.groomName + '.ics')
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    }
+    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' })
+    const url = window.URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'Boda-' + WEDDING_DETAILS.brideName + '-y-' + WEDDING_DETAILS.groomName + '.ics')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    setTimeout(() => {
+      window.URL.revokeObjectURL(url)
+    }, 2000)
   }
 
   const mapsAppUrl =
