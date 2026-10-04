@@ -18,37 +18,6 @@ export function VenueLogistics({
   googleMapsUrl = WEDDING_DETAILS.googleMapsUrl,
   googleMapsEmbedUrl = WEDDING_DETAILS.googleMapsEmbedUrl,
 }: VenueLogisticsProps) {
-  const downloadIcsFile = () => {
-    const formattedDate = WEDDING_DETAILS.targetDateISO.replace(/[-:]/g, '').split('.')[0] + 'Z'
-    const icsData = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Monet Giverny Wedding//NONSGML v1.0//EN',
-      'CALSCALE:GREGORIAN',
-      'METHOD:PUBLISH',
-      'BEGIN:VEVENT',
-      'SUMMARY:Boda ' + WEDDING_DETAILS.coupleNames,
-      'DESCRIPTION:Celebra con nosotros nuestra boda en ' + venueName + '.',
-      'LOCATION:' + venueName + ', ' + address + ', ' + cityState,
-      'DTSTART:' + formattedDate,
-      'DTEND:20261115T080000Z',
-      'STATUS:CONFIRMED',
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n')
-
-    const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' })
-    const url = window.URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.setAttribute('download', 'Boda-' + WEDDING_DETAILS.brideName + '-y-' + WEDDING_DETAILS.groomName + '.ics')
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-    setTimeout(() => {
-      window.URL.revokeObjectURL(url)
-    }, 2000)
-  }
 
   const mapsAppUrl =
     googleMapsUrl ||
@@ -170,12 +139,13 @@ export function VenueLogistics({
             >
               Agregar a Google Calendar
             </a>
-            <button
-              onClick={downloadIcsFile}
+            <a
+              href="/boda.ics"
+              download="Boda-Abdiel-y-Esmeralda.ics"
               className="inline-flex items-center justify-center px-4 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.12em] bg-[var(--color-sage)] text-white hover:bg-[var(--color-moss)] transition-all duration-300 text-center cursor-pointer shadow-sm"
             >
               Agregar a Apple / iPhone Calendar
-            </button>
+            </a>
           </div>
         </div>
       </div>
