@@ -3,6 +3,7 @@
   isolation: isolate;
   box-sizing: border-box;
   min-height: 100svh;
+  min-height: 100vh;
   padding: clamp(40px, 8vh, 88px) 24px;
   display: flex;
   align-items: center;
@@ -10,6 +11,8 @@
   color: #fffdf8;
   background: url('https://pub-5681aa7e98a54b3c951fae89fac431b6.r2.dev/nosotros-tontiando.jpg')
     center / cover no-repeat;
+  color: var(--text-main);
+  background-color: var(--bg-canvas);
 }
 
 .page-shell__overlay {
@@ -17,6 +20,8 @@
   inset: 0;
   z-index: -1;
   background: linear-gradient(135deg, rgba(27, 22, 19, 0.58), rgba(27, 22, 19, 0.2) 55%, rgba(27, 22, 19, 0.48));
+  background: radial-gradient(circle at 50% 20%, rgba(232, 197, 200, 0.25), transparent 70%),
+              linear-gradient(180deg, #FAF8F5 0%, #F3F6F3 100%);
 }
 
 .page-shell__content {
@@ -29,6 +34,11 @@
   background: rgba(19, 15, 14, 0.18);
   backdrop-filter: blur(2px);
   animation: appear 1.2s ease-out both;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-watercolor);
+  animation: fadeIn 0.8s ease-out both;
 }
 
 .page-shell__content--intro,
@@ -54,12 +64,15 @@
 .page-shell__subtitle {
   margin: 0;
   font-family: Georgia, serif;
+  font-family: var(--font-sans);
   letter-spacing: 0.18em;
 }
 
 .page-shell__eyebrow {
   font-size: 0.78rem;
   text-transform: uppercase;
+  color: var(--color-moss);
+  font-weight: 600;
 }
 
 .page-shell h1 {
@@ -69,10 +82,17 @@
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.05em;
+  margin: 12px 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--text-main);
 }
 
 .page-shell__subtitle {
   font-size: 0.95rem;
+  color: var(--text-muted);
 }
 
 .page-shell__link {
@@ -82,13 +102,24 @@
   min-height: 42px;
   padding: 8px 16px;
   color: #fffdf8;
+  padding: 8px 18px;
+  color: var(--color-moss);
   text-decoration: none;
   border: 1px solid rgba(255, 255, 255, 0.45);
   background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  background: var(--surface-tint);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 200ms ease;
 }
 
 .page-shell__link:hover {
   background: rgba(255, 255, 255, 0.14);
+  background: var(--color-sage);
+  color: #ffffff;
 }
 
 .admin-logout {
@@ -138,6 +169,7 @@
   display: grid;
   gap: 8px;
   color: rgba(255, 253, 248, 0.92);
+  color: var(--text-main);
 }
 
 .admin-login__field .invite-form__input {
@@ -149,18 +181,27 @@
 .admin-login__error {
   margin: 0;
   padding: 10px 12px;
+  padding: 10px 14px;
   border-left: 3px solid #e2a18f;
   background: rgba(116, 45, 36, 0.32);
   color: #fff2ed;
+  background: rgba(232, 197, 200, 0.35);
+  color: #742d24;
+  border-radius: 6px;
+  font-size: 0.88rem;
 }
 
 .invite-form {
   display: grid;
   gap: 18px;
   padding: 20px;
+  padding: 24px;
   margin-bottom: 24px;
   background: rgba(255, 253, 248, 0.08);
   border: 1px solid rgba(255, 253, 248, 0.2);
+  background: var(--surface-tint);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
 }
 
 .invite-form__row {
@@ -177,27 +218,51 @@
   background: rgba(13, 12, 12, 0.32);
   color: #fffdf8;
   font: inherit;
+  padding: 0 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
 }
 
 .invite-form__input::placeholder {
   color: rgba(255, 253, 248, 0.7);
+  color: var(--text-muted);
 }
 
 .invite-form__button {
   min-height: 44px;
   padding: 0 18px;
+  padding: 0 22px;
   border: 0;
   background: #d7a98d;
   color: #1c1715;
   font: inherit;
+  border-radius: 9999px;
+  background: var(--color-sage);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
   font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
+  transition: background-color 200ms ease;
+}
+
+.invite-form__button:hover {
+  background: var(--color-moss);
 }
 
 .invite-form__button--secondary {
   background: rgba(255, 255, 255, 0.12);
   color: #fffdf8;
   border: 1px solid rgba(255, 255, 255, 0.35);
+  background: var(--surface-tint);
+  color: var(--color-moss);
+  border: 1px solid var(--border-subtle);
 }
 
 .invite-form__button:disabled {
@@ -220,10 +285,17 @@
   border: 1px solid rgba(255, 253, 248, 0.35);
   background: rgba(255, 255, 255, 0.08);
   color: #fffdf8;
+  padding: 6px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-size: 0.85rem;
 }
 
 .invite-form__empty {
   color: rgba(255, 253, 248, 0.8);
+  color: var(--text-muted);
 }
 
 .new-invitation__guest-list {
@@ -241,6 +313,8 @@
   gap: 12px;
   padding: 8px 10px;
   border-bottom: 1px solid rgba(255, 253, 248, 0.24);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .new-invitation__remove {
@@ -249,6 +323,13 @@
   background: transparent;
   color: #fffdf8;
   font: inherit;
+  padding: 4px 10px;
+  border: 1px solid rgba(226, 161, 143, 0.5);
+  border-radius: 9999px;
+  background: rgba(232, 197, 200, 0.3);
+  color: #742d24;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
   cursor: pointer;
 }
 
@@ -259,6 +340,9 @@
   padding: 20px;
   border: 1px solid rgba(255, 253, 248, 0.4);
   background: rgba(73, 99, 81, 0.22);
+  border: 1px solid var(--color-sage);
+  border-radius: 12px;
+  background: var(--surface-tint);
 }
 
 .new-invitation__success h2,
@@ -298,10 +382,13 @@
   padding: 0 2px 10px;
   border-bottom: 1px solid rgba(255, 253, 248, 0.28);
   color: rgba(255, 253, 248, 0.88);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-muted);
 }
 
 .invite-list__total strong {
   color: #fffdf8;
+  color: var(--text-main);
   font-size: 1.2rem;
 }
 
@@ -322,10 +409,17 @@
   border: 1px solid rgba(255, 253, 248, 0.28);
   background: rgba(255, 253, 248, 0.08);
   color: rgba(255, 253, 248, 0.88);
+  padding: 12px 16px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--surface-tint);
+  color: var(--text-muted);
+  font-size: 0.88rem;
 }
 
 .admin-stats__item strong {
   color: #fffdf8;
+  color: var(--color-moss);
   font-size: 1.35rem;
   font-weight: 600;
 }
@@ -333,11 +427,13 @@
 .admin-state {
   padding: 18px 0;
   color: rgba(255, 253, 248, 0.86);
+  color: var(--text-muted);
   text-align: center;
 }
 
 .admin-state--error {
   color: #ffefea;
+  color: #742d24;
 }
 
 .invite-list__copy {
@@ -347,16 +443,26 @@
   background: rgba(255, 253, 248, 0.1);
   color: #fffdf8;
   font: inherit;
+  padding: 5px 12px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  background: var(--surface-tint);
+  color: var(--color-moss);
+  font-family: var(--font-sans);
   font-size: 0.78rem;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .invite-list__copy:hover {
   background: rgba(255, 253, 248, 0.18);
+  background: var(--color-sage);
+  color: #ffffff;
 }
 
 .invite-list__copy-error {
   color: #ffefea;
+  color: #742d24;
   font-size: 0.85rem;
 }
 
@@ -366,6 +472,11 @@
   padding: 18px 16px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 253, 248, 0.25);
+  padding: 20px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: var(--shadow-card);
 }
 
 .invite-card__header {
@@ -374,14 +485,17 @@
   justify-content: space-between;
   gap: 12px;
   color: #fffdf8;
+  color: var(--text-main);
 }
 
 .invite-card__label {
   margin: 0 0 6px;
   color: rgba(255, 253, 248, 0.75);
+  color: var(--color-moss);
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .invite-card__code-row {
@@ -404,6 +518,8 @@
 .invite-card h3 {
   margin: 0;
   font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
   font-weight: 500;
 }
 
@@ -415,6 +531,8 @@
   border-radius: 50%;
   background: #d7a98d;
   color: #201a17;
+  background: var(--color-primrose);
+  color: var(--color-moss);
   font-weight: 700;
 }
 
@@ -434,6 +552,8 @@
   padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.16);
   color: rgba(255, 253, 248, 0.9);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-main);
 }
 
 .invite-card__guest strong {
@@ -446,6 +566,8 @@
   padding-top: 10px;
   border-top: 1px solid rgba(255, 255, 255, 0.16);
   color: rgba(255, 253, 248, 0.78);
+  border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
@@ -464,11 +586,19 @@
   color: #fff2ed;
   font: inherit;
   font-size: 0.84rem;
+  padding: 6px 12px;
+  border: 1px solid rgba(226, 161, 143, 0.6);
+  border-radius: 9999px;
+  background: rgba(232, 197, 200, 0.35);
+  color: #742d24;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
   cursor: pointer;
 }
 
 .invite-card__delete:hover:not(:disabled) {
   background: rgba(116, 45, 36, 0.48);
+  background: rgba(232, 197, 200, 0.6);
 }
 
 .invite-card__delete:disabled {

@@ -1,14 +1,56 @@
+@import "tailwindcss";
+
 :root {
   font: 16px/1.5 Georgia, 'Times New Roman', serif;
+  /* Surfaces & Backgrounds */
+  --bg-canvas: #FAF8F5;          /* Warm Alabaster */
+  --surface-card: #FFFFFF;       /* Pure Paper White */
+  --surface-tint: #F3F6F3;       /* Diluted Sage Wash */
+  --border-subtle: rgba(138, 154, 134, 0.25);
+  --border-gold: rgba(200, 170, 110, 0.35);
+
+  /* Monet Flora & Water Tones */
+  --color-sage-base: #C0C9B3;    /* Dominant Background Sage Tone */
+  --color-sage: #8A9A86;         /* French Sage (Primary Accent) */
+  --color-moss: #5E6E5A;         /* Willow / Deep Moss */
+  --color-blush: #E8C5C8;        /* Water Lily Pink */
+  --color-periwinkle: #B4C5D4;   /* Hydrangea Periwinkle */
+  --color-primrose: #F3E8C8;     /* Soft Primrose */
+
+  /* Typography Colors */
+  --text-main: #2D3A30;          /* Deep Pine Slate (Never #000000) */
+  --text-muted: #6B756E;         /* Riverbed Gray */
+  --text-light: #FAF8F5;
+
+  /* Shadows & Texture */
+  --shadow-watercolor: 0 12px 36px -8px rgba(94, 110, 90, 0.14);
+  --shadow-card: 0 4px 20px -2px rgba(45, 58, 48, 0.06);
+  --shadow-hover: 0 16px 40px -6px rgba(94, 110, 90, 0.2);
+
+  /* Typography Rules */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Montserrat', sans-serif;
+
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-main);
+  background-color: var(--bg-canvas);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 html {
   min-height: 100%;
   overflow-y: auto;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 #root {
@@ -17,7 +59,96 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
   min-height: 100svh;
   overflow-y: auto;
+  min-height: 100vh;
+  background-color: var(--bg-canvas);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-canvas);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-sage);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-moss);
+}
+
+/* Base Typography Styles */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+p, span, label, button, input, textarea {
+  font-family: var(--font-sans);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatLeaf {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 0.85;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: floatLeaf 6s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 3s ease-in-out infinite;
 }

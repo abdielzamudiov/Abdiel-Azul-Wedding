@@ -1,3 +1,5 @@
+import InvitationDetailPage from './InvitationDetailPage'
+
 function HomePage() {
   return (
     <main className="page-shell">
@@ -9,6 +11,7 @@ function HomePage() {
       </section>
     </main>
   )
+  return <InvitationDetailPage />
 }
 
 export default HomePage
