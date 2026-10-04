@@ -1,5 +1,5 @@
 import { WaterLilyMotif } from './MonetIcons'
-import playingPhoto from '../assets/abdiel&azul-flores-amarillas-jugando.jpg'
+import playingPhoto from '../assets/abdiel&azul-flores-amarillas-jugando-editada.jpg'
 import artistsGarden from '../assets/monet-artists-garden.png'
 
 interface HeroInvitationCardProps {

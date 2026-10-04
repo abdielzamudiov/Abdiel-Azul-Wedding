@@ -21,7 +21,7 @@ export const WEDDING_DETAILS = {
   // Background Music Configuration
   // Put an MP3 file path here (e.g., '/music/cancion-boda.mp3') or leave empty to use ambient piano synth
   musicUrl: '/Akasa Requiem Theme.mp3',
-  musicAutoPlay: true, // Start music automatically on page visit
+  musicAutoPlay: false, // Start music strictly when Ver Invitacion button is clicked
 
   // Venue & Google Maps Information
   venueName: 'Jardín Belcanto',

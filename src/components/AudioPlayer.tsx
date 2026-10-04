@@ -125,45 +125,6 @@ export function AudioPlayer({
     }
   }, [isPlaying, src])
 
-  // Handle browser autoplay policy: start audio on first user tap, click, or keypress anywhere on screen
-  useEffect(() => {
-    if (!autoPlay) return
-
-    const handleFirstInteraction = () => {
-      if (src) {
-        if (audioRef.current && audioRef.current.paused) {
-          audioRef.current
-            .play()
-            .then(() => setIsPlaying(true))
-            .catch(() => {})
-        }
-      } else {
-        if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
-          audioCtxRef.current.resume().catch(() => {})
-        }
-        setIsPlaying(true)
-      }
-
-      events.forEach((evt) => {
-        window.removeEventListener(evt, handleFirstInteraction, true)
-        document.removeEventListener(evt, handleFirstInteraction, true)
-      })
-    }
-
-    const events = ['click', 'pointerdown', 'mousedown', 'keydown', 'touchstart', 'touchend']
-
-    events.forEach((evt) => {
-      window.addEventListener(evt, handleFirstInteraction, { capture: true })
-      document.addEventListener(evt, handleFirstInteraction, { capture: true })
-    })
-
-    return () => {
-      events.forEach((evt) => {
-        window.removeEventListener(evt, handleFirstInteraction, true)
-        document.removeEventListener(evt, handleFirstInteraction, true)
-      })
-    }
-  }, [autoPlay, src])
 
   // Listen for custom trigger event when Ver Invitación is clicked
   useEffect(() => {

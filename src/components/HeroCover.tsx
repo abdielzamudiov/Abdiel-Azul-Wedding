@@ -1,4 +1,4 @@
-import heroImage from '../assets/abdiel&azul-flores-amarillas.jpg'
+import heroImage from '../assets/abdiel&azul-rio-mirandose.jpg'
 import { CountdownTimer } from './CountdownTimer'
 import { WaterLilyMotif } from './MonetIcons'
 import { WEDDING_DETAILS } from '../config/weddingDetails'
@@ -20,7 +20,7 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
         <img
           src={heroImage}
           alt={`${WEDDING_DETAILS.brideName} & ${WEDDING_DETAILS.groomName}`}
-          className="w-full h-full object-cover object-[52%_center] filter brightness-[0.85] contrast-[1.05] transform scale-105 transition-transform duration-1000"
+          className="w-full h-full object-cover object-[48%_center] filter brightness-[0.85] md:brightness-[0.93] contrast-[1.05] transition-transform duration-1000"
           onError={(e) => {
             const target = e.target as HTMLImageElement
             target.onerror = null
@@ -28,7 +28,7 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
               'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&q=80'
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(27,38,30,0.7)] via-[rgba(27,38,30,0.48)] to-[rgba(250,248,245,1)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(27,38,30,0.7)] via-[rgba(27,38,30,0.48)] to-[rgba(250,248,245,1)] md:from-[rgba(27,38,30,0.4)] md:via-[rgba(27,38,30,0.22)] md:to-[rgba(250,248,245,0.92)]" />
       </div>
 
       {/* Top Header Motif */}
