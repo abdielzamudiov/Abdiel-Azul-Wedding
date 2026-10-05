@@ -4,6 +4,7 @@ import HomePage from './pages/HomePage'
 import InvitationDetailPage from './pages/InvitationDetailPage'
 import CreateInvitePage from './pages/CreateInvitePage'
 import NewInvitationPage from './pages/NewInvitationPage'
+import EditInvitationPage from './pages/EditInvitationPage'
 import AdminLoginPage from './pages/AdminLoginPage'
 import { AdminAuthProvider } from './auth/AdminAuth'
 import { useAdminAuth } from './auth/AdminAuthContext'
@@ -32,6 +33,7 @@ function App() {
         <Route element={<ProtectedAdminRoute />}>
           <Route path="/admin" element={<CreateInvitePage />} />
           <Route path="/admin/invitations/new" element={<NewInvitationPage />} />
+          <Route path="/admin/invitations/:id/edit" element={<EditInvitationPage />} />
           <Route path="/create-invite" element={<Navigate to="/admin/invitations/new" replace />} />
         </Route>
         <Route path="/invitation" element={<InvitationDetailPage />} />

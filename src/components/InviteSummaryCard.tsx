@@ -63,6 +63,12 @@ function InviteSummaryCard({ invitation, copied, copyError, onCopy, deleting, de
       </ul>
       <p className="invite-card__status">{statusLabel} · {invitation.totalPasses} pases</p>
       <div className="invite-card__delete-row">
+        <Link
+          className="invite-card__edit"
+          to={`/admin/invitations/${encodeURIComponent(invitation._id)}/edit`}
+        >
+          Editar invitación
+        </Link>
         <button
           className="invite-card__delete"
           disabled={deleting}

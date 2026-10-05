@@ -606,6 +606,28 @@
   cursor: wait;
 }
 
+.invite-card__edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  background: var(--surface-tint);
+  color: var(--color-moss);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 200ms ease;
+}
+
+.invite-card__edit:hover {
+  background: var(--color-sage);
+  color: #ffffff;
+}
+
 @keyframes appear {
   from {
     opacity: 0;
