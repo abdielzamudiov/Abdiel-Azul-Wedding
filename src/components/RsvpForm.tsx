@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { CheckIcon, WaterLilyMotif } from './MonetIcons'
 import womanWithParasol from '../assets/monet-woman-with-parasol.png'
+import { WEDDING_DETAILS } from '../config/weddingDetails'
 import './RsvpForm.css'
 
 export type RsvpStatus = 'accepted' | 'rejected' | null
@@ -109,6 +110,25 @@ export function RsvpForm({
               <strong className="text-[var(--text-main)]">{guestCount || normalizedGuests.length}</strong>{' '}
               {guestCount === 1 || normalizedGuests.length === 1 ? 'persona' : 'personas'}.
             </p>
+
+            {/* Confirmation Deadline Disclaimer Badge */}
+            <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full bg-[var(--surface-tint)] border border-[var(--border-subtle)] mt-2.5 mb-1">
+              <span className="text-xs">⏳</span>
+              <p className="text-xs font-medium text-[var(--color-moss)] font-[var(--font-sans)]">
+                Fecha límite para confirmar:{' '}
+                <span className="font-semibold text-[var(--text-main)]">{WEDDING_DETAILS.rsvpDeadlineString}</span>
+              </p>
+            </div>
+
+            {/* Polite Pass & Guest Scope Reminder Note */}
+            <div className="bg-[var(--surface-tint)] p-4 rounded-xl border border-[var(--border-subtle)] text-center space-y-1.5 mt-4">
+              <p className="text-xs font-semibold text-[var(--color-moss)] tracking-wide font-[var(--font-sans)] uppercase">
+                🌸 Nota Importante sobre tus Pases
+              </p>
+              <p className="text-xs text-[var(--text-muted)] font-[var(--font-sans)] leading-relaxed italic">
+                Apreciamos de corazón su apoyo reservando la asistencia únicamente para las personas nombradas en esta invitación.
+              </p>
+            </div>
           </div>
 
           {submitSuccess && (

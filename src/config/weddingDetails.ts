@@ -17,6 +17,7 @@ export const WEDDING_DETAILS = {
   targetDateISO: '2026-11-30T17:00:00', // Used for Countdown Timer
   dateString: 'Lunes, 30 de Noviembre de 2026',
   timeString: '17:00 HRS',
+  rsvpDeadlineString: '1 de Noviembre de 2026',
 
   // Background Music Configuration
   // Put an MP3 file path here (e.g., '/music/cancion-boda.mp3') or leave empty to use ambient piano synth
