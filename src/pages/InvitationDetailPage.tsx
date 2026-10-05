@@ -14,6 +14,7 @@ import { HeroInvitationCard } from '../components/HeroInvitationCard'
 import RsvpForm, { type RsvpGuest, type RsvpResponse } from '../components/RsvpForm'
 import { WaterLilyMotif } from '../components/MonetIcons'
 import masterFrame from '../assets/monet-giverny-master-frame.png'
+import waterLilyPng from '../assets/water-lily-flower.png'
 
 interface InvitationApiPerson {
   name: string
@@ -168,7 +169,11 @@ export function InvitationDetailPage() {
   if (loading) {
     return (
       <main className="min-h-screen bg-[var(--bg-canvas)] flex flex-col items-center justify-center p-6 text-center">
-        <WaterLilyMotif className="w-24 h-auto mb-4 animate-pulse-soft" />
+        <img
+          src={waterLilyPng}
+          alt="Nenúfar"
+          className="w-28 h-auto mb-4 animate-pulse-soft mx-auto"
+        />
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
           {WEDDING_DETAILS.coupleNames}
         </p>
