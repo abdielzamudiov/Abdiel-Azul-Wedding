@@ -34,8 +34,8 @@ export const WEDDING_DETAILS = {
 
   // Religious & Quote Details
   quoteText:
-    '«Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente. El amor es paciente y bondadoso. Todo lo soporta, todo lo cree, todo lo espera, todo lo aguanta.»',
-  quoteSource: 'El Cantar de los Cantares 8:7 | 1 Corintios 13:4, 7',
+    '«El amor es paciente y bondadoso. Todo lo soporta, todo lo aguanta. El amor nunca falla.»',
+  quoteSource: '1 Corintios 13:4, 7, 8',
 
   // Family & Padrinos
   brideParents: 'Cuahutemoc Crespo & Lourdes Pacheco',
@@ -48,20 +48,20 @@ export const WEDDING_DETAILS = {
   itinerary: [
     {
       time: '17:00 HRS',
-      title: 'Ceremonia Religiosa',
-      subtitle: 'Discurso Bíblico & Promesas',
+      title: 'Discurso Biblico',
+      subtitle: 'Discurso Bíblico & Votos Matrimoniales',
       location: 'Jardín Belcanto',
       description:
-        'Un emotivo momento para bendecir nuestra unión ante Dios y compartir nuestras promesas junto a nuestros seres queridos.',
+        '"Y una cuerda triple no se rompe fácilmente." — Eclesiastés 4:12',
       icon: 'rings',
     },
     {
       time: '18:30 HRS',
-      title: 'Banquete & Cena de Gala',
-      subtitle: 'Gastronomía Sinaloense',
+      title: 'Banquete',
+      subtitle: 'Cena & Bebidas',
       location: 'Jardín Belcanto',
       description:
-        'Disfrutaremos un exquisito banquete tradicional con nuestro especial platillo de Barbacoa Sinaloense y cócteles de bienvenida.',
+        'Disfrutaremos un exquisito banquete tradicional de Barbacoa Sinaloense.',
       icon: 'utensils',
     },
     {
@@ -70,11 +70,11 @@ export const WEDDING_DETAILS = {
       subtitle: 'Íntimo Vals de Esposos',
       location: 'Jardín Belcanto',
       description:
-        'Acompáñanos a presenciar nuestro primer vals como esposos, iluminados bajo la magia del atardecer en los jardines.',
+        'Acompáñanos a presenciar nuestro primer vals como esposos, un momento lleno de amor y emoción.',
       icon: 'heart',
     },
     {
-      time: '19:15 HRS',
+      time: '19:05 HRS',
       title: 'Pista de Baile',
       subtitle: 'Música en Vivo & Celebración',
       location: 'Jardín Belcanto',
@@ -88,16 +88,16 @@ export const WEDDING_DETAILS = {
       subtitle: 'Mensaje Especial & Despedida',
       location: 'Jardín Belcanto',
       description:
-        'Palabras de agradecimiento de los novios a todos los invitados por acompañarnos, y cierre con broche de oro de una noche inolvidable.',
+        'Palabras de agradecimiento de los novios a todos los invitados por acompañarnos, y cierre de una noche inolvidable.',
       icon: 'moon',
     },
   ] as ItineraryConfigItem[],
 
   // Dress Code
-  dressCodeTitle: 'Garden Formal Nocturno / Etiqueta Jardín de Noche',
+  dressCodeTitle: 'Formal Obligatorio / Etiqueta Jardín Nocturno',
   dressCodeNote:
-    'Nuestra boda se celebrará al aire libre por la tarde-noche. Les sugerimos vestimenta formal en tonos inspirados en un jardín nocturno (púrpura, lavanda crepúsculo, azul noche, ciruela, eucalipto) o tonos pastel suaves.',
-  dressCodeWarning: '🌸 Les pedimos amablemente reservar los tonos blanco, marfil y beige exclusivamente para la novia.',
+    'Nuestra boda se celebrará al aire libre por la tarde-noche y la vestimenta es estrictamente formal. Les pedimos amablemente acudir con elegancia y recato (evitando minifaldas, prendas demasiado cortas o escotes muy pronunciados). Les sugerimos vestimenta formal en tonos inspirados en un jardín nocturno o tonos pastel suaves.',
+  dressCodeWarning: '🌸 Les pedimos amablemente reservar los tonos blanco, marfil y beige exclusivamente para los novios.',
 
   // Gift Registry & Bank Accounts
   giftMessage:
