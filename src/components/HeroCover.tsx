@@ -1,6 +1,5 @@
 import heroImage from '../assets/abdiel&azul-rio-mirandose.jpg'
 import { CountdownTimer } from './CountdownTimer'
-import { WaterLilyMotif } from './MonetIcons'
 import { WEDDING_DETAILS } from '../config/weddingDetails'
 
 interface HeroCoverProps {
@@ -33,7 +32,6 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
 
       {/* Top Header Motif */}
       <div className="relative z-10 pt-12 sm:pt-16 px-4 space-y-3 max-w-2xl mx-auto">
-        <WaterLilyMotif className="w-28 sm:w-36 h-auto mx-auto filter drop-shadow-md brightness-125" />
         <p className="text-xs uppercase tracking-[0.28em] text-[var(--color-primrose)] font-semibold font-[var(--font-sans)] drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]">
           Nuestra Boda
         </p>

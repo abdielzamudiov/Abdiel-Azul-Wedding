@@ -33,10 +33,12 @@ export function CountdownTimer({ targetDate = '2026-11-14T16:00:00' }: Countdown
   }, [targetDate])
 
   return (
-    <div className="w-full max-w-xl mx-auto my-10 px-4 text-center">
-      <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold mb-4">
-        Faltan para el gran día
-      </p>
+    <div className="w-full max-w-xl mx-auto my-6 sm:my-8 px-4 text-center">
+      <div className="inline-block px-5 py-1.5 rounded-full bg-black/25 backdrop-blur-md border border-white/30 shadow-md mb-4">
+        <p className="text-xs uppercase tracking-[0.22em] text-white font-semibold font-[var(--font-sans)] drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+          Faltan para el gran día
+        </p>
+      </div>
       <div className="grid grid-cols-4 gap-3 sm:gap-6">
         {[
           { label: 'Días', value: timeLeft.days },

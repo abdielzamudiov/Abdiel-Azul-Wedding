@@ -34,8 +34,8 @@ export const WEDDING_DETAILS = {
 
   // Religious & Quote Details
   quoteText:
-    '«Las muchas aguas no podrán apagar el amor, ni lo ahogarán los ríos. El amor es paciente, es bondadoso, todo lo sufre, todo lo cree, todo lo espera, todo lo soporta. El amor nunca deja de ser.»',
-  quoteSource: '1 Corintios 13:4-8 | Cantares 8:7',
+    '«Las aguas embravecidas no pueden extinguir el amor, ni pueden los ríos llevárselo con la corriente. El amor es paciente y bondadoso. Todo lo soporta, todo lo cree, todo lo espera, todo lo aguanta.»',
+  quoteSource: 'El Cantar de los Cantares 8:7 | 1 Corintios 13:4, 7',
 
   // Family & Padrinos
   brideParents: 'Cuahutemoc Crespo & Lourdes Pacheco',
