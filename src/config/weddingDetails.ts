@@ -16,7 +16,7 @@ export const WEDDING_DETAILS = {
   // Event Date & Time
   targetDateISO: '2026-11-30T17:00:00', // Used for Countdown Timer
   dateString: 'Lunes, 30 de Noviembre de 2026',
-  timeString: '17:00 HRS',
+  timeString: '5:00 PM',
   rsvpDeadlineString: '1 de Noviembre de 2026',
 
   // Background Music Configuration
@@ -47,7 +47,7 @@ export const WEDDING_DETAILS = {
   itineraryTitle: 'Programa del Evento',
   itinerary: [
     {
-      time: '17:00 HRS',
+      time: '5:00 PM',
       title: 'Discurso Biblico',
       subtitle: 'Discurso Bíblico & Votos Matrimoniales',
       location: 'Jardín Belcanto',
@@ -56,7 +56,7 @@ export const WEDDING_DETAILS = {
       icon: 'rings',
     },
     {
-      time: '18:30 HRS',
+      time: '6:30 PM',
       title: 'Banquete',
       subtitle: 'Cena & Bebidas',
       location: 'Jardín Belcanto',
@@ -65,7 +65,7 @@ export const WEDDING_DETAILS = {
       icon: 'utensils',
     },
     {
-      time: '19:00 HRS',
+      time: '7:00 PM',
       title: 'Vals de los Novios',
       subtitle: 'Íntimo Vals de Esposos',
       location: 'Jardín Belcanto',
@@ -74,7 +74,7 @@ export const WEDDING_DETAILS = {
       icon: 'heart',
     },
     {
-      time: '19:05 HRS',
+      time: '7:05 PM',
       title: 'Pista de Baile',
       subtitle: 'Música en Vivo & Celebración',
       location: 'Jardín Belcanto',
@@ -83,7 +83,7 @@ export const WEDDING_DETAILS = {
       icon: 'dance',
     },
     {
-      time: '23:00 HRS',
+      time: '11:00 PM',
       title: 'Palabras de Agradecimiento & Cierre',
       subtitle: 'Mensaje Especial & Despedida',
       location: 'Jardín Belcanto',

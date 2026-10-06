@@ -16,7 +16,7 @@ interface HeroInvitationCardProps {
 export function HeroInvitationCard({
   coupleNames = 'Sofía & Alejandro',
   dateString = 'Sábado, 14 de Noviembre de 2026',
-  timeString = '16:00 HRS',
+  timeString = '5:00 PM',
   venueName = 'Hacienda Los Cerezos',
   cityState = 'Valle de Bravo, México',
   guestName,
