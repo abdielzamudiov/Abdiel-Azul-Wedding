@@ -1,5 +1,5 @@
 import photoHorizon from '../assets/abdiel&azul-mirando-horizonte-espaldas.jpg'
-import photoYellowFlowers from '../assets/abdiel&azul-flores-amarillas.jpg'
+import pedidaPhoto from '../assets/Abdiel&azul-pedida - 1.jpeg'
 import extraPhoto1 from '../assets/Abdiel&azul-extra-photos - 1.jpeg'
 import extraPhoto2 from '../assets/Abdiel&azul-extra-photos - 2.jpeg'
 import extraPhoto3 from '../assets/Abdiel&azul-extra-photos - 3.jpeg'
@@ -10,7 +10,7 @@ import waterLilies from '../assets/monet-water-lilies.png'
 export function PhotoGallerySection() {
   return (
     <section className="w-full max-w-4xl mx-auto px-4 py-6">
-      {/* Group 1 Card: Photo Horizon, Extra Photo #4, and Yellow Flowers */}
+      {/* Group 1 Card: Photo Horizon, Extra Photo #4, and Pedida Photo */}
       <div
         className="relative bg-white rounded-2xl p-4 sm:p-8 border border-[var(--border-subtle)] shadow-[var(--shadow-card)] overflow-hidden transition-all duration-500 hover:shadow-[var(--shadow-hover)]"
         style={{
@@ -45,12 +45,12 @@ export function PhotoGallerySection() {
             </div>
           </div>
 
-          {/* Yellow Flowers Photo (Portrait/Square framing) */}
+          {/* Pedida Photo (Portrait) */}
           <div className="w-full">
             <div className="relative rounded-xl overflow-hidden shadow-[var(--shadow-card)] border border-[var(--border-subtle)] aspect-[3/4] w-full group bg-[var(--surface-tint)]">
               <img
-                src={photoYellowFlowers}
-                alt="Abdiel & Esmeralda en el campo de flores amarillas"
+                src={pedidaPhoto}
+                alt="Abdiel & Esmeralda"
                 className="w-full h-full object-cover object-center transform group-hover:scale-103 transition-transform duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[rgba(27,38,30,0.25)] via-transparent to-transparent opacity-70" />
