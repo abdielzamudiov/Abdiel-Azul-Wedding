@@ -13,7 +13,7 @@ import { GiftRegistrySection } from '../components/GiftRegistrySection'
 import { HeroInvitationCard } from '../components/HeroInvitationCard'
 import RsvpForm, { type RsvpGuest, type RsvpResponse } from '../components/RsvpForm'
 import { WaterLilyMotif } from '../components/MonetIcons'
-import masterFrame from '../assets/monet-giverny-master-frame.png'
+import masterFrame from '../assets/monet-giverny-oil-master-frame.png'
 import waterLilyPng from '../assets/water-lily-flower.png'
 
 interface InvitationApiPerson {
