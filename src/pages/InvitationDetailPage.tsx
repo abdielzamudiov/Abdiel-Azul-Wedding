@@ -5,7 +5,7 @@ import { WEDDING_DETAILS } from '../config/weddingDetails'
 import { AudioPlayer } from '../components/AudioPlayer'
 import { HeroCover } from '../components/HeroCover'
 import { CoupleSection } from '../components/CoupleSection'
-import { PhotoGallerySection } from '../components/PhotoGallerySection'
+import { PhotoGallerySection, ExtraPhotoGallerySection } from '../components/PhotoGallerySection'
 import { ItineraryTimeline } from '../components/ItineraryTimeline'
 import { VenueLogistics } from '../components/VenueLogistics'
 import { DressCodeSection } from '../components/DressCodeSection'
@@ -270,6 +270,11 @@ export function InvitationDetailPage() {
               />
             </section>
           )}
+
+          {/* New Photo Gallery Section (After RSVP, Before Footer) */}
+          <section className="relative z-10 pt-4">
+            <ExtraPhotoGallerySection />
+          </section>
 
           {/* Elegant Monet Footer */}
           <footer className="w-full max-w-4xl mx-auto px-4 py-8 text-center border-t border-[var(--border-subtle)] mt-8 space-y-4 relative z-10">
