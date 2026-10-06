@@ -1,4 +1,5 @@
 import {
+  CameraIcon,
   ChurchIcon,
   DanceIcon,
   GlassIcon,
@@ -17,7 +18,7 @@ export interface ItineraryItem {
   subtitle: string
   location?: string
   description?: string
-  icon: 'church' | 'glass' | 'music' | 'rings' | 'utensils' | 'dance' | 'sparkles' | 'heart' | 'moon'
+  icon: 'church' | 'glass' | 'music' | 'rings' | 'utensils' | 'dance' | 'sparkles' | 'heart' | 'moon' | 'camera'
 }
 
 interface ItineraryTimelineProps {
@@ -47,6 +48,8 @@ export function ItineraryTimeline({
         return <DanceIcon className="w-5 h-5 text-[var(--color-moss)]" />
       case 'sparkles':
         return <SparklesIcon className="w-5 h-5 text-[var(--color-moss)]" />
+      case 'camera':
+        return <CameraIcon className="w-5 h-5 text-[var(--color-moss)]" />
       case 'moon':
         return <MoonIcon className="w-5 h-5 text-[var(--color-periwinkle)]" />
       case 'music':

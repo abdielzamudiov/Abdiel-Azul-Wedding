@@ -4,7 +4,7 @@ export interface ItineraryConfigItem {
   subtitle: string
   location?: string
   description?: string
-  icon: 'church' | 'glass' | 'music' | 'rings' | 'utensils' | 'dance' | 'sparkles' | 'heart' | 'moon'
+  icon: 'church' | 'glass' | 'music' | 'rings' | 'utensils' | 'dance' | 'sparkles' | 'heart' | 'moon' | 'camera'
 }
 
 export const WEDDING_DETAILS = {
@@ -14,9 +14,9 @@ export const WEDDING_DETAILS = {
   coupleNames: 'Abdiel & Esmeralda',
 
   // Event Date & Time
-  targetDateISO: '2026-11-30T17:00:00', // Used for Countdown Timer
+  targetDateISO: '2026-11-30T16:30:00', // Used for Countdown Timer
   dateString: 'Lunes, 30 de Noviembre de 2026',
-  timeString: '5:00 PM',
+  timeString: '4:30 PM',
   rsvpDeadlineString: '1 de Noviembre de 2026',
 
   // Background Music Configuration
@@ -47,16 +47,25 @@ export const WEDDING_DETAILS = {
   itineraryTitle: 'Programa del Evento',
   itinerary: [
     {
-      time: '5:00 PM',
+      time: '4:30 PM',
       title: 'Discurso Biblico',
-      subtitle: 'Discurso Bíblico & Votos Matrimoniales',
+      subtitle: '& Votos Matrimoniales',
       location: 'Jardín Belcanto',
       description:
         '"Y una cuerda triple no se rompe fácilmente." — Eclesiastés 4:12',
       icon: 'rings',
     },
     {
-      time: '6:30 PM',
+      time: '5:30 PM',
+      title: 'Fotos',
+      subtitle: 'Sesión de Fotos con los Novios',
+      location: 'Jardín Belcanto',
+      description:
+        'Un momento especial para tomar fotografías de recuerdo con los novios y nuestros seres queridos.',
+      icon: 'camera',
+    },
+    {
+      time: '6:00 PM',
       title: 'Banquete',
       subtitle: 'Cena & Bebidas',
       location: 'Jardín Belcanto',
@@ -65,7 +74,7 @@ export const WEDDING_DETAILS = {
       icon: 'utensils',
     },
     {
-      time: '7:00 PM',
+      time: '6:30 PM',
       title: 'Vals de los Novios',
       subtitle: 'Íntimo Vals de Esposos',
       location: 'Jardín Belcanto',
@@ -74,7 +83,7 @@ export const WEDDING_DETAILS = {
       icon: 'heart',
     },
     {
-      time: '7:05 PM',
+      time: '6:35 PM',
       title: 'Pista de Baile',
       subtitle: 'Música en Vivo & Celebración',
       location: 'Jardín Belcanto',
