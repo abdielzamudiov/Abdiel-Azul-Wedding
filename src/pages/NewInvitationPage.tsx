@@ -116,6 +116,18 @@ function NewInvitationPage() {
     }
   }
 
+  function handleResetForm() {
+    setInvitationCode('')
+    setGuestName('')
+    setNames([])
+    setValidationMessage('')
+    setRequestError('')
+    setSubmitting(false)
+    setCreated(null)
+    setCopied(false)
+    setCopyError(false)
+  }
+
   async function copyCreatedUrl() {
     if (!created) return
 
@@ -212,6 +224,9 @@ function NewInvitationPage() {
               </Link>
               <button className="invite-form__button invite-form__button--secondary" onClick={copyCreatedUrl} type="button">
                 {copied ? '¡Link copiado!' : 'Copiar link'}
+              </button>
+              <button className="invite-form__button invite-form__button--secondary" onClick={handleResetForm} type="button">
+                Crear otra invitación
               </button>
             </div>
             {copyError && <p className="admin-login__error" role="alert">No se pudo copiar el link.</p>}
