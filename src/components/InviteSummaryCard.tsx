@@ -19,7 +19,7 @@ interface InviteSummaryCardProps {
   invitation: AdminInvitation
   copied: boolean
   copyError: boolean
-  onCopy: (invitationId: string) => void
+  onCopy: (invitation: AdminInvitation) => void
   deleting: boolean
   deleteError: string | null
   onDelete: (invitation: AdminInvitation) => void
@@ -42,7 +42,7 @@ function InviteSummaryCard({ invitation, copied, copyError, onCopy, deleting, de
             <Link className="invite-card__code-link" to={`/invitation/${encodeURIComponent(invitation._id)}`}>
               <h3>{invitation.invitationCode}</h3>
             </Link>
-            <button className="invite-list__copy" onClick={() => onCopy(invitation._id)} type="button">
+            <button className="invite-list__copy" onClick={() => onCopy(invitation)} type="button">
               {copied ? '¡Link copiado!' : 'Copiar link de invitación'}
             </button>
             {copyError && <span className="invite-list__copy-error" role="alert">No se pudo copiar el link.</span>}

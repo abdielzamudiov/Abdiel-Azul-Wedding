@@ -116,4 +116,16 @@ export const WEDDING_DETAILS = {
   accountHolder: 'Eliu Abdiel Zamudio Vaquereño',
   accountNumber: '', // Leave empty string if you only want to show CLABE number
   clabeNumber: '002744702115935295',
+
+  // Admin Invitation Share Message Template
+  // Puedes editar este texto cuando gustes. Los marcadores {invitationCode} y {url} se reemplazarán automáticamente.
+  invitationShareMessageTemplate:
+    '¡Hola! Nos complace enormemente invitar a {invitationCode} a celebrar con nosotros el día de nuestra boda. 🌸\n\nCon mucho cariño, hemos preparado todos los detalles de nuestro gran día en el siguiente enlace, donde también podrán consultar la información y confirmar su asistencia:\n\n{url}',
+}
+
+export function formatInvitationShareMessage(invitationCode: string, url: string): string {
+  const code = invitationCode?.trim() || 'nuestros queridos invitados'
+  return WEDDING_DETAILS.invitationShareMessageTemplate
+    .replace('{invitationCode}', code)
+    .replace('{url}', url)
 }

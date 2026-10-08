@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import InviteSummaryCard, { type AdminInvitation } from '../components/InviteSummaryCard'
 import { useAdminAuth } from '../auth/AdminAuthContext'
 import { API_BASE_URL } from '../config/api'
+import { formatInvitationShareMessage } from '../config/weddingDetails'
 
 interface AdminInvitationsResponse {
   invitations: AdminInvitation[]
@@ -55,16 +56,17 @@ function CreateInvitePage() {
     return () => controller.abort()
   }, [adminFetch])
 
-  async function copyInvitationLink(invitationId: string) {
-    const invitationUrl = `${window.location.origin}/invitation/${encodeURIComponent(invitationId)}`
+  async function copyInvitationLink(invitation: AdminInvitation) {
+    const invitationUrl = `${window.location.origin}/invitation/${encodeURIComponent(invitation._id)}`
+    const message = formatInvitationShareMessage(invitation.invitationCode, invitationUrl)
 
     try {
-      await navigator.clipboard.writeText(invitationUrl)
-      setCopiedInvitationId(invitationId)
+      await navigator.clipboard.writeText(message)
+      setCopiedInvitationId(invitation._id)
       setCopyErrorId(null)
     } catch {
       setCopiedInvitationId(null)
-      setCopyErrorId(invitationId)
+      setCopyErrorId(invitation._id)
     }
   }
 

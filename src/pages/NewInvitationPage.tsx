@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAdminAuth } from '../auth/AdminAuthContext'
 import type { AdminInvitation } from '../components/InviteSummaryCard'
 import { API_BASE_URL } from '../config/api'
+import { formatInvitationShareMessage } from '../config/weddingDetails'
 
 interface CreateInvitationResponse {
   invitation: AdminInvitation
@@ -131,8 +132,10 @@ function NewInvitationPage() {
   async function copyCreatedUrl() {
     if (!created) return
 
+    const message = formatInvitationShareMessage(created.invitation.invitationCode, created.url)
+
     try {
-      await navigator.clipboard.writeText(created.url)
+      await navigator.clipboard.writeText(message)
       setCopied(true)
       setCopyError(false)
     } catch {
