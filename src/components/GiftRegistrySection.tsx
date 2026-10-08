@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BankIcon, CheckIcon, CopyIcon, GiftIcon } from './MonetIcons'
+import { BankIcon, CheckIcon, CopyIcon, EnvelopeIcon, GiftIcon } from './MonetIcons'
 import { WEDDING_DETAILS } from '../config/weddingDetails'
 import japaneseFootbridge from '../assets/monet-japanese-footbridge.png'
 
@@ -9,6 +9,8 @@ interface GiftRegistrySectionProps {
   accountHolder?: string
   accountNumber?: string
   clabeNumber?: string
+  envelopesTitle?: string
+  envelopesMessage?: string
 }
 
 export function GiftRegistrySection({
@@ -17,6 +19,8 @@ export function GiftRegistrySection({
   accountHolder = WEDDING_DETAILS.accountHolder,
   accountNumber = WEDDING_DETAILS.accountNumber,
   clabeNumber = WEDDING_DETAILS.clabeNumber,
+  envelopesTitle = WEDDING_DETAILS.envelopesTitle,
+  envelopesMessage = WEDDING_DETAILS.envelopesMessage,
 }: GiftRegistrySectionProps) {
   const [copiedClabe, setCopiedClabe] = useState(false)
   const [copiedAccount, setCopiedAccount] = useState(false)
@@ -109,7 +113,7 @@ export function GiftRegistrySection({
             </div>
           )}
 
-          {/* Card 2: Lluvia de Sobres / Transferencia Bancaria */}
+          {/* Card 2: Transferencia Bancaria */}
           {hasBankDetails && (
             <div className="bg-[var(--surface-tint)] rounded-xl p-6 border border-[var(--border-subtle)] flex flex-col justify-between space-y-6 hover:shadow-md transition-shadow">
               <div className="space-y-4">
@@ -119,7 +123,7 @@ export function GiftRegistrySection({
 
                 <div>
                   <span className="text-xs uppercase tracking-[0.14em] text-[var(--color-sage)] font-semibold font-[var(--font-sans)]">
-                    Lluvia de Sobres / Transferencia
+                    Transferencia Bancaria
                   </span>
                   <h3 className="text-xl font-serif font-medium text-[var(--text-main)] mt-1">
                     Datos Bancarios
@@ -193,15 +197,29 @@ export function GiftRegistrySection({
                   )}
                 </div>
               </div>
-
-              <div className="text-center">
-                <p className="text-[11px] text-[var(--text-muted)] italic font-[var(--font-sans)]">
-                  En el evento también contaremos con un buzón de sobres para sus felicitaciones. ✉️
-                </p>
-              </div>
             </div>
           )}
         </div>
+
+        {/* Card 3: Lluvia de Sobres en el Evento */}
+        {Boolean(envelopesTitle && envelopesMessage) && (
+          <div className="bg-[var(--surface-tint)] rounded-xl p-6 border border-[var(--border-subtle)] flex flex-col sm:flex-row items-center sm:items-start gap-5 hover:shadow-md transition-shadow">
+            <div className="w-12 h-12 rounded-xl bg-white border border-[var(--border-subtle)] flex items-center justify-center text-[var(--color-moss)] shadow-sm shrink-0">
+              <EnvelopeIcon className="w-6 h-6" />
+            </div>
+            <div className="space-y-2 text-center sm:text-left flex-1">
+              <span className="text-xs uppercase tracking-[0.14em] text-[var(--color-sage)] font-semibold font-[var(--font-sans)]">
+                Presencial en el Evento
+              </span>
+              <h3 className="text-xl font-serif font-medium text-[var(--text-main)]">
+                {envelopesTitle}
+              </h3>
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed font-[var(--font-sans)] max-w-2xl">
+                {envelopesMessage}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   )

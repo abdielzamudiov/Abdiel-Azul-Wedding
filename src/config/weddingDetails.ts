@@ -116,6 +116,9 @@ export const WEDDING_DETAILS = {
   accountHolder: 'Eliu Abdiel Zamudio Vaquereño',
   accountNumber: '', // Leave empty string if you only want to show CLABE number
   clabeNumber: '002744702115935295',
+  envelopesTitle: 'Lluvia de Sobres',
+  envelopesMessage:
+    'Si así lo prefieren, el día del evento también contaremos con un buzón especial de lluvia de sobres para recibir sus felicitaciones y buenos deseos.',
 
   // Admin Invitation Share Message Template
   // Puedes editar este texto cuando gustes. Los marcadores {invitationCode} y {url} se reemplazarán automáticamente.
