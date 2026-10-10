@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import InviteSummaryCard, { type AdminInvitation } from '../components/InviteSummaryCard'
 import { useAdminAuth } from '../auth/AdminAuthContext'
@@ -11,15 +11,58 @@ interface AdminInvitationsResponse {
   totalAttendees: number
 }
 
+type InvitationFilter = 'all' | 'responded' | 'pending'
+
+function isInvitationResponded(invitation: AdminInvitation): boolean {
+  return (
+    invitation.status !== 'pending' ||
+    Boolean(invitation.respondedAt) ||
+    invitation.people.some((person) => person.answered)
+  )
+}
+
 function CreateInvitePage() {
   const { logout, adminFetch } = useAdminAuth()
   const [data, setData] = useState<AdminInvitationsResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+  const [filter, setFilter] = useState<InvitationFilter>('all')
   const [copiedInvitationId, setCopiedInvitationId] = useState<string | null>(null)
   const [copyErrorId, setCopyErrorId] = useState<string | null>(null)
   const [deletingInvitationId, setDeletingInvitationId] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<{ invitationId: string; message: string } | null>(null)
+
+  const { respondedCount, pendingCount, filteredInvitations } = useMemo(() => {
+    const invitations = data?.invitations ?? []
+    let responded = 0
+    let pending = 0
+
+    const respondedList: AdminInvitation[] = []
+    const pendingList: AdminInvitation[] = []
+
+    for (const item of invitations) {
+      if (isInvitationResponded(item)) {
+        responded++
+        respondedList.push(item)
+      } else {
+        pending++
+        pendingList.push(item)
+      }
+    }
+
+    const filtered =
+      filter === 'responded'
+        ? respondedList
+        : filter === 'pending'
+          ? pendingList
+          : invitations
+
+    return {
+      respondedCount: responded,
+      pendingCount: pending,
+      filteredInvitations: filtered,
+    }
+  }, [data?.invitations, filter])
 
   useEffect(() => {
     const controller = new AbortController()
@@ -151,24 +194,79 @@ function CreateInvitePage() {
 
         {!loading && !error && data && data.invitations.length > 0 && (
           <>
-            <p className="invite-list__total">
-              <span>Total de invitaciones <strong>{data.invitations.length}</strong></span>
-              <span>Personas invitadas <strong>{data.invitations.reduce((total, invitation) => total + invitation.people.length, 0)}</strong></span>
-            </p>
-            <div className="invite-list">
-              {data.invitations.map((invitation) => (
-                <InviteSummaryCard
-                  copied={copiedInvitationId === invitation._id}
-                  copyError={copyErrorId === invitation._id}
-                  invitation={invitation}
-                  key={invitation._id}
-                  onCopy={copyInvitationLink}
-                  deleting={deletingInvitationId === invitation._id}
-                  deleteError={deleteError?.invitationId === invitation._id ? deleteError.message : null}
-                  onDelete={deleteInvitation}
-                />
-              ))}
+            <div className="admin-filters" role="group" aria-label="Filtrar invitaciones">
+              <button
+                type="button"
+                className={`admin-filter-btn ${filter === 'all' ? 'admin-filter-btn--active' : ''}`}
+                onClick={() => setFilter('all')}
+                aria-pressed={filter === 'all'}
+              >
+                <span>Todas</span>
+                <span className="admin-filter-btn__count">{data.invitations.length}</span>
+              </button>
+              <button
+                type="button"
+                className={`admin-filter-btn ${filter === 'responded' ? 'admin-filter-btn--active' : ''}`}
+                onClick={() => setFilter((current) => (current === 'responded' ? 'all' : 'responded'))}
+                aria-pressed={filter === 'responded'}
+              >
+                <span>Respondidas</span>
+                <span className="admin-filter-btn__count">{respondedCount}</span>
+              </button>
+              <button
+                type="button"
+                className={`admin-filter-btn ${filter === 'pending' ? 'admin-filter-btn--active' : ''}`}
+                onClick={() => setFilter((current) => (current === 'pending' ? 'all' : 'pending'))}
+                aria-pressed={filter === 'pending'}
+              >
+                <span>Pendientes por responder</span>
+                <span className="admin-filter-btn__count">{pendingCount}</span>
+              </button>
             </div>
+
+            <p className="invite-list__total">
+              <span>
+                {filter === 'all' ? (
+                  <>Total de invitaciones <strong>{data.invitations.length}</strong></>
+                ) : filter === 'responded' ? (
+                  <>Invitaciones respondidas <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
+                ) : (
+                  <>Invitaciones pendientes <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
+                )}
+              </span>
+              <span>
+                Personas invitadas{' '}
+                <strong>{filteredInvitations.reduce((total, invitation) => total + invitation.people.length, 0)}</strong>
+              </span>
+            </p>
+
+            {filteredInvitations.length === 0 ? (
+              <div className="admin-filter-empty">
+                <p className="admin-state">
+                  {filter === 'responded'
+                    ? 'No hay invitaciones que hayan respondido todavía.'
+                    : '¡Todas las invitaciones han sido respondidas!'}
+                </p>
+                <button className="admin-filter-btn" type="button" onClick={() => setFilter('all')}>
+                  Mostrar todas las invitaciones
+                </button>
+              </div>
+            ) : (
+              <div className="invite-list">
+                {filteredInvitations.map((invitation) => (
+                  <InviteSummaryCard
+                    copied={copiedInvitationId === invitation._id}
+                    copyError={copyErrorId === invitation._id}
+                    invitation={invitation}
+                    key={invitation._id}
+                    onCopy={copyInvitationLink}
+                    deleting={deletingInvitationId === invitation._id}
+                    deleteError={deleteError?.invitationId === invitation._id ? deleteError.message : null}
+                    onDelete={deleteInvitation}
+                  />
+                ))}
+              </div>
+            )}
           </>
         )}
       </section>

@@ -436,6 +436,91 @@
   color: #742d24;
 }
 
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 16px;
+  align-items: center;
+}
+
+.admin-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 9999px;
+  background: var(--surface-card);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.admin-filter-btn:hover {
+  border-color: var(--color-sage);
+  color: var(--text-main);
+  background: var(--surface-tint);
+}
+
+.admin-filter-btn--active {
+  background: var(--color-moss);
+  border-color: var(--color-moss);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(94, 110, 90, 0.22);
+}
+
+.admin-filter-btn--active:hover {
+  background: var(--color-moss);
+  border-color: var(--color-moss);
+  color: #ffffff;
+}
+
+.admin-filter-btn__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--surface-tint);
+  color: var(--color-moss);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s ease;
+}
+
+.admin-filter-btn--active .admin-filter-btn__count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.admin-filter-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px 16px;
+  background: var(--surface-tint);
+  border: 1px dashed var(--border-subtle);
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.admin-filter-empty .admin-state {
+  padding: 0;
+}
+
 .invite-list__copy {
   min-height: 34px;
   padding: 5px 9px;
