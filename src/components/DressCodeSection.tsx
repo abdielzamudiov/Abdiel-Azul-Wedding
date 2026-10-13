@@ -62,15 +62,11 @@ export function DressCodeSection() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-1">
               {mensSuitsPalette.map((color, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-1.5 group">
+                <div key={idx} className="flex flex-col items-center group">
                   <div
                     className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-white shadow-md transform group-hover:scale-110 transition-transform duration-300"
                     style={{ backgroundColor: color.hex }}
-                    title={color.name}
                   />
-                  <span className="text-[10px] text-[var(--text-muted)] font-medium font-[var(--font-sans)]">
-                    {color.name}
-                  </span>
                 </div>
               ))}
             </div>
@@ -85,15 +81,11 @@ export function DressCodeSection() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 pt-1">
               {gardenPalette.map((color, idx) => (
-                <div key={idx} className="flex flex-col items-center gap-1.5 group">
+                <div key={idx} className="flex flex-col items-center group">
                   <div
                     className="w-9 h-9 sm:w-11 sm:h-11 rounded-full border-2 border-white shadow-md transform group-hover:scale-110 transition-transform duration-300"
                     style={{ backgroundColor: color.hex }}
-                    title={color.name}
                   />
-                  <span className="text-[10px] text-[var(--text-muted)] font-medium font-[var(--font-sans)]">
-                    {color.name}
-                  </span>
                 </div>
               ))}
             </div>
