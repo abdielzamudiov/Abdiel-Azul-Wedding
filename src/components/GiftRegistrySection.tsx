@@ -5,6 +5,7 @@ import japaneseFootbridge from '../assets/monet-japanese-footbridge.png'
 
 interface GiftRegistrySectionProps {
   registryUrl?: string
+  amazonRegistryUrl?: string
   bankName?: string
   accountHolder?: string
   accountNumber?: string
@@ -15,6 +16,7 @@ interface GiftRegistrySectionProps {
 
 export function GiftRegistrySection({
   registryUrl = WEDDING_DETAILS.registryUrl,
+  amazonRegistryUrl = WEDDING_DETAILS.amazonRegistryUrl,
   bankName = WEDDING_DETAILS.bankName,
   accountHolder = WEDDING_DETAILS.accountHolder,
   accountNumber = WEDDING_DETAILS.accountNumber,
@@ -78,8 +80,8 @@ export function GiftRegistrySection({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-          {/* Card 1: Mesa de Regalos Direct Link */}
-          {Boolean(registryUrl) && (
+          {/* Card 1: Mesas de Regalos Digitales */}
+          {(Boolean(registryUrl) || Boolean(amazonRegistryUrl)) && (
             <div className="bg-[var(--surface-tint)] rounded-xl p-6 border border-[var(--border-subtle)] flex flex-col justify-between space-y-6 hover:shadow-md transition-shadow">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-white border border-[var(--border-subtle)] flex items-center justify-center text-[var(--color-moss)] shadow-sm">
@@ -91,24 +93,42 @@ export function GiftRegistrySection({
                     Mesa de Regalos Digital
                   </span>
                   <h3 className="text-xl font-serif font-medium text-[var(--text-main)] mt-1">
-                    Liverpool / Tiendas Seleccionadas
+                    {registryUrl && amazonRegistryUrl
+                      ? 'Liverpool & Amazon'
+                      : amazonRegistryUrl
+                        ? 'Amazon México'
+                        : 'Liverpool'}
                   </h3>
                 </div>
 
                 <p className="text-xs text-[var(--text-muted)] leading-relaxed font-[var(--font-sans)]">
-                  Pueden consultar nuestra lista de regalos en línea o buscar con el evento o los nombres de los novios.
+                  {registryUrl && amazonRegistryUrl
+                    ? 'Pueden consultar nuestras listas de regalos en línea en Liverpool o en Amazon según su preferencia:'
+                    : 'Pueden consultar nuestra lista de regalos en línea o buscar con el evento o los nombres de los novios.'}
                 </p>
               </div>
 
-              <div>
-                <a
-                  href={registryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center w-full px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.14em] bg-[var(--color-sage)] text-white hover:bg-[var(--color-moss)] transition-all duration-300 shadow-sm cursor-pointer"
-                >
-                  Ver Mesa de Regalos 🎁
-                </a>
+              <div className="space-y-2.5 pt-1">
+                {Boolean(registryUrl) && (
+                  <a
+                    href={registryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.14em] bg-[var(--color-sage)] text-white hover:bg-[var(--color-moss)] transition-all duration-300 shadow-sm cursor-pointer"
+                  >
+                    Mesa Liverpool 🎁
+                  </a>
+                )}
+                {Boolean(amazonRegistryUrl) && (
+                  <a
+                    href={amazonRegistryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center w-full px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.14em] bg-[var(--color-moss)] text-white hover:bg-[var(--color-sage)] transition-all duration-300 shadow-sm cursor-pointer"
+                  >
+                    Mesa Amazon 📦
+                  </a>
+                )}
               </div>
             </div>
           )}

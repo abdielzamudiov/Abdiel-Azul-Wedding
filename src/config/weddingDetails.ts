@@ -112,6 +112,7 @@ export const WEDDING_DETAILS = {
   giftMessage:
     '«El mejor regalo que podemos recibir en este día tan especial es su presencia y compañía. Sin embargo, si es su deseo hacernos un obsequio, les compartimos nuestras opciones de preferencia:»',
   registryUrl: 'https://mesaderegalos.liverpool.com.mx/milistaderegalos/60053817',
+  amazonRegistryUrl: 'https://www.amazon.com.mx/wedding/share/Abdiel-Y-Azul',
   bankName: 'Banamex México',
   accountHolder: 'Eliu Abdiel Zamudio Vaquereño',
   accountNumber: '', // Leave empty string if you only want to show CLABE number
