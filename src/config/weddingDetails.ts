@@ -122,9 +122,9 @@ export const WEDDING_DETAILS = {
     'Si así lo prefieren, el día del evento también contaremos con un buzón especial de lluvia de sobres para recibir sus felicitaciones y buenos deseos.',
 
   // Admin Invitation Share Message Template
-  // Puedes editar este texto cuando gustes. Los marcadores {invitationCode} y {url} se reemplazarán automáticamente.
+  // Puedes editar este texto cuando gustes. Los marcadores {invitationCode}, {url} y {rsvpDeadline} se reemplazarán automáticamente.
   invitationShareMessageTemplate:
-    '¡Hola! Nos complace enormemente invitar a {invitationCode} a celebrar con nosotros el día de nuestra boda. 🌸\n\nCon mucho cariño, hemos preparado todos los detalles de nuestro gran día en el siguiente enlace, donde también podrán consultar la información y confirmar su asistencia:\n\n{url}',
+    '¡Hola! Nos complace enormemente invitar a {invitationCode} a celebrar con nosotros el día de nuestra boda. 🌸\n\nCon mucho cariño, hemos preparado todos los detalles de nuestro gran día en el siguiente enlace, donde también podrán consultar la información y confirmar su asistencia:\n\n{url}\n\nLes pedimos amablemente confirmar su asistencia a más tardar el {rsvpDeadline}. ¡Nos encantará contar con su presencia!',
 }
 
 export function formatInvitationShareMessage(invitationCode: string, url: string): string {
@@ -132,4 +132,5 @@ export function formatInvitationShareMessage(invitationCode: string, url: string
   return WEDDING_DETAILS.invitationShareMessageTemplate
     .replace('{invitationCode}', code)
     .replace('{url}', url)
+    .replace('{rsvpDeadline}', WEDDING_DETAILS.rsvpDeadlineString)
 }
