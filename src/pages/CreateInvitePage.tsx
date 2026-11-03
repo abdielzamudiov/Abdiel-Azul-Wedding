@@ -11,7 +11,7 @@ interface AdminInvitationsResponse {
   totalAttendees: number
 }
 
-type InvitationFilter = 'all' | 'responded' | 'pending'
+type InvitationFilter = 'all' | 'responded' | 'pending' | 'danceOnly'
 
 function isInvitationResponded(invitation: AdminInvitation): boolean {
   return (
@@ -32,15 +32,22 @@ function CreateInvitePage() {
   const [deletingInvitationId, setDeletingInvitationId] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<{ invitationId: string; message: string } | null>(null)
 
-  const { respondedCount, pendingCount, filteredInvitations } = useMemo(() => {
+  const { respondedCount, pendingCount, danceOnlyCount, filteredInvitations } = useMemo(() => {
     const invitations = data?.invitations ?? []
     let responded = 0
     let pending = 0
+    let danceOnly = 0
 
     const respondedList: AdminInvitation[] = []
     const pendingList: AdminInvitation[] = []
+    const danceOnlyList: AdminInvitation[] = []
 
     for (const item of invitations) {
+      if (item.danceOnly) {
+        danceOnly++
+        danceOnlyList.push(item)
+      }
+
       if (isInvitationResponded(item)) {
         responded++
         respondedList.push(item)
@@ -55,11 +62,14 @@ function CreateInvitePage() {
         ? respondedList
         : filter === 'pending'
           ? pendingList
-          : invitations
+          : filter === 'danceOnly'
+            ? danceOnlyList
+            : invitations
 
     return {
       respondedCount: responded,
       pendingCount: pending,
+      danceOnlyCount: danceOnly,
       filteredInvitations: filtered,
     }
   }, [data?.invitations, filter])
@@ -186,6 +196,10 @@ function CreateInvitePage() {
             <span>Asistentes confirmados</span>
             <strong>{loading ? '...' : data?.totalAttendees ?? 0}</strong>
           </div>
+          <div className="admin-stats__item">
+            <span>Solo Baile</span>
+            <strong>{loading ? '...' : danceOnlyCount}</strong>
+          </div>
         </div>
 
         {loading && <p className="admin-state" role="status">Cargando invitaciones...</p>}
@@ -222,6 +236,15 @@ function CreateInvitePage() {
                 <span>Pendientes por responder</span>
                 <span className="admin-filter-btn__count">{pendingCount}</span>
               </button>
+              <button
+                type="button"
+                className={`admin-filter-btn ${filter === 'danceOnly' ? 'admin-filter-btn--active' : ''}`}
+                onClick={() => setFilter((current) => (current === 'danceOnly' ? 'all' : 'danceOnly'))}
+                aria-pressed={filter === 'danceOnly'}
+              >
+                <span>🕺 Solo Baile</span>
+                <span className="admin-filter-btn__count">{danceOnlyCount}</span>
+              </button>
             </div>
 
             <p className="invite-list__total">
@@ -230,8 +253,10 @@ function CreateInvitePage() {
                   <>Total de invitaciones <strong>{data.invitations.length}</strong></>
                 ) : filter === 'responded' ? (
                   <>Invitaciones respondidas <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
-                ) : (
+                ) : filter === 'pending' ? (
                   <>Invitaciones pendientes <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
+                ) : (
+                  <>Invitaciones solo baile <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
                 )}
               </span>
               <span>
@@ -243,7 +268,9 @@ function CreateInvitePage() {
             {filteredInvitations.length === 0 ? (
               <div className="admin-filter-empty">
                 <p className="admin-state">
-                  {filter === 'responded'
+                  {filter === 'danceOnly'
+                    ? 'No hay invitaciones registradas para Solo Baile.'
+                    : filter === 'responded'
                     ? 'No hay invitaciones que hayan respondido todavía.'
                     : '¡Todas las invitaciones han sido respondidas!'}
                 </p>

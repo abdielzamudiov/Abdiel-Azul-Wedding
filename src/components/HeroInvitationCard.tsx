@@ -11,6 +11,7 @@ interface HeroInvitationCardProps {
   guestName?: string
   guestCount?: number
   photoUrl?: string
+  isDanceOnly?: boolean
 }
 
 export function HeroInvitationCard({
@@ -22,6 +23,7 @@ export function HeroInvitationCard({
   guestName,
   guestCount,
   photoUrl,
+  isDanceOnly = false,
 }: HeroInvitationCardProps) {
 
   return (
@@ -77,8 +79,16 @@ export function HeroInvitationCard({
             <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-40 my-3" />
 
             <p className="text-xs uppercase tracking-[0.14em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
-              Tienen el honor de invitarle a su boda
+              {isDanceOnly ? 'Tienen el honor de invitarle a la celebración & baile de su boda' : 'Tienen el honor de invitarle a su boda'}
             </p>
+
+            {isDanceOnly && (
+              <div className="inline-block mx-auto py-1 px-3.5 rounded-full bg-[var(--surface-tint)] border border-[var(--border-subtle)] mt-2 mb-1">
+                <span className="text-[11px] font-semibold text-[var(--color-moss)] uppercase tracking-wider">
+                  🕺 Pase Exclusivo de Baile • Acceso {timeString}
+                </span>
+              </div>
+            )}
 
             {/* Date, Time, Venue */}
             <div className="pt-4 space-y-1.5 text-[var(--text-main)]">

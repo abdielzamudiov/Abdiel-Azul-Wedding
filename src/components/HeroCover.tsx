@@ -5,9 +5,16 @@ import { WEDDING_DETAILS } from '../config/weddingDetails'
 interface HeroCoverProps {
   isOpened?: boolean
   onOpen?: () => void
+  timeString?: string
+  badgeText?: string
 }
 
-export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
+export function HeroCover({
+  isOpened = false,
+  onOpen,
+  timeString = WEDDING_DETAILS.timeString,
+  badgeText,
+}: HeroCoverProps) {
   return (
     <section
       className={`relative w-full transition-all duration-1000 ease-in-out flex flex-col justify-between items-center text-center overflow-hidden bg-[var(--text-main)] text-white ${
@@ -61,8 +68,15 @@ export function HeroCover({ isOpened = false, onOpen }: HeroCoverProps) {
             {WEDDING_DETAILS.dateString}
           </p>
           <p className="text-xs sm:text-sm uppercase tracking-[0.18em] text-[var(--color-primrose)] font-semibold">
-            {WEDDING_DETAILS.timeString} • {WEDDING_DETAILS.venueName}
+            {timeString} • {WEDDING_DETAILS.venueName}
           </p>
+          {badgeText && (
+            <div className="pt-1">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-white/20 text-[var(--color-primrose)] border border-white/30 backdrop-blur-sm">
+                {badgeText}
+              </span>
+            </div>
+          )}
           <p className="text-xs text-white/90 tracking-wide font-[var(--font-sans)]">
             {WEDDING_DETAILS.cityState}
           </p>

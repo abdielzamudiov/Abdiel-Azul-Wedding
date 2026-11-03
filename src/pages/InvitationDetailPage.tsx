@@ -28,6 +28,7 @@ interface InvitationApiResponse {
     invitationCode: string
     totalPasses: number
     status: 'pending' | 'confirmed' | 'declined'
+    danceOnly?: boolean
     people: InvitationApiPerson[]
     respondedAt: string | null
   } | null
@@ -165,6 +166,7 @@ export function InvitationDetailPage() {
 
   const guestDisplayName = invitation?.invitationCode || invitation?.people?.[0]?.name
   const totalPasses = invitation?.totalPasses ?? invitation?.people?.length ?? 2
+  const isDanceOnly = Boolean(invitation?.danceOnly)
 
   if (loading) {
     return (
@@ -199,11 +201,39 @@ export function InvitationDetailPage() {
       <AudioPlayer visible={isOpened} />
 
       {/* Hero Cover Banner: Fullscreen Unopened Cover OR Revealed Header */}
-      <HeroCover isOpened={isOpened} onOpen={handleOpenInvitation} />
+      <HeroCover
+        isOpened={isOpened}
+        onOpen={handleOpenInvitation}
+        timeString={isDanceOnly ? WEDDING_DETAILS.danceTimeString : WEDDING_DETAILS.timeString}
+        badgeText={isDanceOnly ? 'Pase de Baile • 7:30 PM' : undefined}
+      />
 
       {/* Revealed Content Sections (Only displayed when isOpened = true) */}
       {isOpened && (
         <div className="animate-fade-in-smooth">
+          {/* Dance-Only Special Notice Banner */}
+          {isDanceOnly && (
+            <section className="relative z-10 w-full max-w-3xl mx-auto px-4 pt-6 pb-2 text-center">
+              <div className="bg-[var(--surface-tint)] border border-[var(--border-subtle)] rounded-2xl p-6 sm:p-8 shadow-[var(--shadow-card)] space-y-3">
+                <span className="inline-block px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-[0.16em] bg-white text-[var(--color-moss)] border border-[var(--border-subtle)] font-[var(--font-sans)] shadow-sm">
+                  🕺 Pase Especial de Baile
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-serif font-medium text-[var(--text-main)]">
+                  {WEDDING_DETAILS.danceNoticeTitle}
+                </h2>
+                <p className="text-sm text-[var(--text-muted)] font-[var(--font-sans)] leading-relaxed max-w-xl mx-auto">
+                  {WEDDING_DETAILS.danceNoticeDescription}
+                </p>
+                <div className="pt-2">
+                  <div className="inline-flex items-center gap-2 text-xs font-medium text-[var(--color-moss)] bg-white/80 py-2.5 px-4 rounded-xl border border-[var(--border-subtle)] shadow-sm">
+                    <span>🍿🍸</span>
+                    <span>{WEDDING_DETAILS.danceSnacksNote}</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
           {/* Couple Photo & Bible Quote Section */}
           <section id="couple-section" className="relative z-10">
             <CoupleSection />
@@ -216,7 +246,12 @@ export function InvitationDetailPage() {
 
           {/* Event Schedule & Itinerary */}
           <section className="relative z-10">
-            <ItineraryTimeline />
+            <ItineraryTimeline
+              items={isDanceOnly ? WEDDING_DETAILS.danceItinerary : WEDDING_DETAILS.itinerary}
+              title={isDanceOnly ? WEDDING_DETAILS.danceItineraryTitle : WEDDING_DETAILS.itineraryTitle}
+              subtitle={isDanceOnly ? WEDDING_DETAILS.danceItinerarySubtitle : WEDDING_DETAILS.itinerarySubtitle}
+              footerNote={isDanceOnly ? WEDDING_DETAILS.danceSnacksNote : undefined}
+            />
           </section>
 
           {/* Venue & Logistics + Google Maps Embed */}
@@ -229,10 +264,12 @@ export function InvitationDetailPage() {
             <DressCodeSection />
           </section>
 
-          {/* Gift Registry & Bank Details */}
-          <section className="relative z-10">
-            <GiftRegistrySection />
-          </section>
+          {/* Gift Registry & Bank Details (Omitted for Dance-only guests) */}
+          {!isDanceOnly && (
+            <section className="relative z-10">
+              <GiftRegistrySection />
+            </section>
+          )}
 
           {/* RSVP Section: Personalized Paper Invitation Card & Form (Only rendered for valid invitations) */}
           {Boolean(invitation?._id) && (
@@ -242,7 +279,7 @@ export function InvitationDetailPage() {
                   Tu Invitación Personal
                 </p>
                 <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)]">
-                  Confirmación de Asistencia
+                  {isDanceOnly ? 'Confirmación para el Baile' : 'Confirmación de Asistencia'}
                 </h2>
                 <div className="w-12 h-px bg-[var(--color-sage)] mx-auto opacity-50 my-2" />
               </div>
@@ -251,11 +288,12 @@ export function InvitationDetailPage() {
               <HeroInvitationCard
                 coupleNames={WEDDING_DETAILS.coupleNames}
                 dateString={WEDDING_DETAILS.dateString}
-                timeString={WEDDING_DETAILS.timeString}
+                timeString={isDanceOnly ? WEDDING_DETAILS.danceTimeString : WEDDING_DETAILS.timeString}
                 venueName={WEDDING_DETAILS.venueName}
                 cityState={WEDDING_DETAILS.cityState}
                 guestName={guestDisplayName}
                 guestCount={totalPasses}
+                isDanceOnly={isDanceOnly}
               />
 
               <RsvpForm
@@ -267,14 +305,17 @@ export function InvitationDetailPage() {
                 isSubmitting={submitState === 'submitting'}
                 submitSuccess={submitState === 'success'}
                 submitMessage={submitMessage}
+                isDanceOnly={isDanceOnly}
               />
             </section>
           )}
 
-          {/* New Photo Gallery Section (After RSVP, Before Footer) */}
-          <section className="relative z-10 pt-4">
-            <ExtraPhotoGallerySection />
-          </section>
+          {/* Extra Photo Gallery Section (Only shown on full invitations) */}
+          {!isDanceOnly && (
+            <section className="relative z-10 pt-4">
+              <ExtraPhotoGallerySection />
+            </section>
+          )}
 
           {/* Elegant Monet Footer */}
           <footer className="w-full max-w-4xl mx-auto px-4 py-8 text-center border-t border-[var(--border-subtle)] mt-8 space-y-4 relative z-10">

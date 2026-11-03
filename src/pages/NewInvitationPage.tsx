@@ -19,6 +19,7 @@ function NewInvitationPage() {
   const [invitationCode, setInvitationCode] = useState('')
   const [guestName, setGuestName] = useState('')
   const [names, setNames] = useState<string[]>([])
+  const [danceOnly, setDanceOnly] = useState(false)
   const [validationMessage, setValidationMessage] = useState('')
   const [requestError, setRequestError] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -79,9 +80,14 @@ function NewInvitationPage() {
     setSubmitting(true)
 
     try {
-      const body: { names: string[]; invitationCode?: string } = { names: uniqueNames }
+      const body: { names: string[]; invitationCode?: string; danceOnly?: boolean } = {
+        names: uniqueNames,
+      }
       if (trimmedCode) {
         body.invitationCode = trimmedCode
+      }
+      if (danceOnly) {
+        body.danceOnly = true
       }
 
       const response = await adminFetch(`${API_BASE_URL}/api/admin/invitations`, {
@@ -121,6 +127,7 @@ function NewInvitationPage() {
     setInvitationCode('')
     setGuestName('')
     setNames([])
+    setDanceOnly(false)
     setValidationMessage('')
     setRequestError('')
     setSubmitting(false)
@@ -208,6 +215,23 @@ function NewInvitationPage() {
             </ul>
           )}
 
+          <div className="invite-form__checkbox-field">
+            <label className="invite-form__checkbox-label">
+              <input
+                type="checkbox"
+                checked={danceOnly}
+                onChange={(event) => setDanceOnly(event.target.checked)}
+                className="invite-form__checkbox"
+              />
+              <span className="invite-form__checkbox-title">
+                🕺 Solo Baile
+              </span>
+            </label>
+            <p className="invite-form__checkbox-desc">
+              Pase restringido exclusivo para la recepción y pista de baile (a partir de las 7:30 PM). No incluye cena ni regalos.
+            </p>
+          </div>
+
           {validationMessage && <p className="admin-login__error" role="alert">{validationMessage}</p>}
           {requestError && <p className="admin-login__error" role="alert">{requestError}</p>}
 
@@ -218,7 +242,14 @@ function NewInvitationPage() {
 
         {created && (
           <section className="new-invitation__success" aria-labelledby="created-invitation-title" role="status">
-            <p className="page-shell__eyebrow">Invitación creada</p>
+            <div className="new-invitation__header-success">
+              <p className="page-shell__eyebrow">Invitación creada</p>
+              {created.invitation.danceOnly && (
+                <span className="invite-card__dance-badge" title="Pase exclusivo para el baile">
+                  🕺 Solo Baile
+                </span>
+              )}
+            </div>
             <h2 id="created-invitation-title">{created.invitation.invitationCode}</h2>
             <p className="new-invitation__url">{created.url}</p>
             <div className="new-invitation__actions">

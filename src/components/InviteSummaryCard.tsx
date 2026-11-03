@@ -11,6 +11,7 @@ export interface AdminInvitation {
   invitationCode: string
   totalPasses: number
   status: 'pending' | 'confirmed' | 'declined'
+  danceOnly?: boolean
   people: AdminInvitationPerson[]
   respondedAt: string | null
 }
@@ -37,7 +38,14 @@ function InviteSummaryCard({ invitation, copied, copyError, onCopy, deleting, de
     <article className="invite-card">
       <div className="invite-card__header">
         <div>
-          <p className="invite-card__label">Invitación</p>
+          <div className="invite-card__label-row">
+            <p className="invite-card__label">Invitación</p>
+            {invitation.danceOnly && (
+              <span className="invite-card__dance-badge" title="Pase exclusivo para el baile">
+                🕺 Solo Baile
+              </span>
+            )}
+          </div>
           <div className="invite-card__code-row">
             <Link className="invite-card__code-link" to={`/invitation/${encodeURIComponent(invitation._id)}`}>
               <h3>{invitation.invitationCode}</h3>
@@ -61,7 +69,10 @@ function InviteSummaryCard({ invitation, copied, copyError, onCopy, deleting, de
           </li>
         ))}
       </ul>
-      <p className="invite-card__status">{statusLabel} · {invitation.totalPasses} pases</p>
+      <p className="invite-card__status">
+        {statusLabel} · {invitation.totalPasses} {invitation.totalPasses === 1 ? 'pase' : 'pases'}
+        {invitation.danceOnly && <strong className="invite-card__status-dance"> · Solo Baile</strong>}
+      </p>
       <div className="invite-card__delete-row">
         <Link
           className="invite-card__edit"

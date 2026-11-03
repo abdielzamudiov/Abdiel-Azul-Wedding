@@ -33,6 +33,7 @@ interface RsvpFormProps {
   isSubmitting?: boolean
   submitSuccess?: boolean
   submitMessage?: string
+  isDanceOnly?: boolean
 }
 
 export function RsvpForm({
@@ -44,6 +45,7 @@ export function RsvpForm({
   isSubmitting = false,
   submitSuccess = false,
   submitMessage = '',
+  isDanceOnly = false,
 }: RsvpFormProps) {
   const normalizedGuests = guests.length
     ? guests.map((guest) => ({
@@ -100,15 +102,16 @@ export function RsvpForm({
           <div className="text-center mb-6">
             <WaterLilyMotif className="w-24 h-auto mx-auto mb-2 opacity-80" />
             <p className="text-xs uppercase tracking-[0.2em] text-[var(--color-moss)] font-semibold font-[var(--font-sans)]">
-              Confirmación de Asistencia
+              {isDanceOnly ? 'Confirmación para el Baile' : 'Confirmación de Asistencia'}
             </p>
             <h2 className="text-3xl sm:text-4xl font-serif font-medium text-[var(--text-main)] mt-1">
-              ¿Nos Acompañas?
+              {isDanceOnly ? '¿Nos Acompañas a Celebrar?' : '¿Nos Acompañas?'}
             </h2>
             <p className="text-xs text-[var(--text-muted)] font-medium mt-1 font-[var(--font-sans)]">
               Esta invitación es para{' '}
               <strong className="text-[var(--text-main)]">{guestCount || normalizedGuests.length}</strong>{' '}
-              {guestCount === 1 || normalizedGuests.length === 1 ? 'persona' : 'personas'}.
+              {guestCount === 1 || normalizedGuests.length === 1 ? 'persona' : 'personas'}
+              {isDanceOnly ? ' (Pase de Baile)' : ''}.
             </p>
 
             {/* Confirmation Deadline Disclaimer Badge */}

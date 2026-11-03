@@ -30,6 +30,7 @@ export function EditInvitationPage() {
   // Form state
   const [names, setNames] = useState<string[]>([])
   const [totalPasses, setTotalPasses] = useState<number>(1)
+  const [danceOnly, setDanceOnly] = useState<boolean>(false)
   const [guestInput, setGuestInput] = useState('')
 
   // Validation & Submit status
@@ -69,6 +70,7 @@ export function EditInvitationPage() {
         setOriginalInvitation(target)
         setNames(target.people.map((p) => p.name))
         setTotalPasses(target.totalPasses)
+        setDanceOnly(Boolean(target.danceOnly))
       } catch (err) {
         if (err instanceof DOMException && err.name === 'AbortError') return
         setFetchError(err instanceof Error ? err.message : 'Error al cargar la invitación.')
@@ -89,6 +91,7 @@ export function EditInvitationPage() {
     names.length !== originalNames.length ||
     names.some((name, index) => name !== originalNames[index])
   const hasPassesChanged = originalInvitation ? totalPasses !== originalInvitation.totalPasses : false
+  const hasDanceOnlyChanged = originalInvitation ? danceOnly !== Boolean(originalInvitation.danceOnly) : false
 
   const isResponded = originalInvitation
     ? originalInvitation.status !== 'pending' || originalInvitation.people.some((p) => p.answered)
@@ -148,7 +151,7 @@ export function EditInvitationPage() {
 
     if (!id || !originalInvitation) return
 
-    if (!hasNamesChanged && !hasPassesChanged) {
+    if (!hasNamesChanged && !hasPassesChanged && !hasDanceOnlyChanged) {
       setValidationMessage('No has realizado ningún cambio en la invitación.')
       return
     }
@@ -191,7 +194,7 @@ export function EditInvitationPage() {
     setSubmitting(true)
 
     try {
-      const body: { names?: string[]; totalPasses?: number } = {}
+      const body: { names?: string[]; totalPasses?: number; danceOnly?: boolean } = {}
 
       if (hasNamesChanged) {
         body.names = uniqueNames
@@ -199,6 +202,10 @@ export function EditInvitationPage() {
       } else if (hasPassesChanged) {
         // Send ONLY totalPasses so backend preserves existing RSVP answers
         body.totalPasses = totalPasses
+      }
+
+      if (hasDanceOnlyChanged) {
+        body.danceOnly = danceOnly
       }
 
       const response = await adminFetch(
@@ -235,6 +242,7 @@ export function EditInvitationPage() {
       setUpdatedInvitation(result.invitation)
       setNames(result.invitation.people.map((p) => p.name))
       setTotalPasses(result.invitation.totalPasses)
+      setDanceOnly(Boolean(result.invitation.danceOnly))
     } catch {
       setRequestError('No pudimos conectar con el servidor. Inténtalo de nuevo.')
     } finally {
@@ -373,6 +381,28 @@ export function EditInvitationPage() {
                 💡 Al cambiar la lista de nombres, el total de pases debe ser igual a la cantidad de personas ({names.length}).
               </p>
             )}
+          </div>
+
+          <div className="invite-form__checkbox-field">
+            <label className="invite-form__checkbox-label">
+              <input
+                type="checkbox"
+                checked={danceOnly}
+                onChange={(event) => {
+                  setDanceOnly(event.target.checked)
+                  setValidationMessage('')
+                  setRequestError('')
+                  setUpdatedInvitation(null)
+                }}
+                className="invite-form__checkbox"
+              />
+              <span className="invite-form__checkbox-title">
+                🕺 Solo Baile
+              </span>
+            </label>
+            <p className="invite-form__checkbox-desc">
+              Pase restringido exclusivo para la recepción y fiesta de baile (a partir de las 7:30 PM). No incluye cena ni regalos.
+            </p>
           </div>
 
           {validationMessage && (

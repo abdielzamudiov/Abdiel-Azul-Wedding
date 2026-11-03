@@ -25,12 +25,14 @@ interface ItineraryTimelineProps {
   items?: ItineraryItem[]
   title?: string
   subtitle?: string
+  footerNote?: string
 }
 
 export function ItineraryTimeline({
   items = WEDDING_DETAILS.itinerary,
   title = WEDDING_DETAILS.itineraryTitle,
   subtitle = WEDDING_DETAILS.itinerarySubtitle,
+  footerNote,
 }: ItineraryTimelineProps) {
   const getIcon = (type: ItineraryItem['icon']) => {
     switch (type) {
@@ -107,6 +109,14 @@ export function ItineraryTimeline({
           </div>
         ))}
       </div>
+
+      {footerNote && (
+        <div className="mt-8 text-center bg-white rounded-xl p-4 sm:p-5 border border-[var(--border-subtle)] shadow-[var(--shadow-card)] max-w-xl mx-auto">
+          <p className="text-xs sm:text-sm text-[var(--color-moss)] font-medium font-[var(--font-sans)] leading-relaxed">
+            🍿🍸 {footerNote}
+          </p>
+        </div>
+      )}
     </section>
   )
 }

@@ -121,6 +121,36 @@ export const WEDDING_DETAILS = {
   envelopesMessage:
     'Si así lo prefieren, el día del evento también contaremos con un buzón especial de lluvia de sobres para recibir sus felicitaciones y buenos deseos.',
 
+  // Dance-Only Invitation Configurations (Modificables en este archivo)
+  danceTimeString: '7:30 PM',
+  danceNoticeTitle: 'Invitación a Recepción & Baile',
+  danceNoticeDescription:
+    'Nos llena de alegría invitarte a celebrar con nosotros en la pista de baile a partir de las 7:30 PM. ¡Acompáñanos a disfrutar de una velada inolvidable con música, baile y gran ambiente!',
+  danceSnacksNote:
+    'Habrá deliciosos snacks, bocadillos y bebidas para disfrutar durante toda la fiesta.',
+  danceItineraryTitle: 'Programa de Baile & Celebración',
+  danceItinerarySubtitle: 'Recepción & Pista de Baile',
+  danceItinerary: [
+    {
+      time: '7:30 PM',
+      title: 'Recepción & Pista de Baile',
+      subtitle: 'Música en Vivo & Celebración',
+      location: 'Jardín Belcanto',
+      description:
+        '¡Es momento de celebrar en grande! Los esperamos para disfrutar de la pista de baile, excelente música, deliciosos snacks, bocadillos y bebidas.',
+      icon: 'dance',
+    },
+    {
+      time: '11:00 PM',
+      title: 'Palabras de Agradecimiento & Cierre',
+      subtitle: 'Mensaje Especial & Despedida',
+      location: 'Jardín Belcanto',
+      description:
+        'Palabras de agradecimiento de los novios a todos los invitados por acompañarnos, y cierre de una noche inolvidable.',
+      icon: 'moon',
+    },
+  ] as ItineraryConfigItem[],
+
   // Admin Invitation Share Message Template
   // Puedes editar este texto cuando gustes. Los marcadores {invitationCode}, {url} y {rsvpDeadline} se reemplazarán automáticamente.
   invitationShareMessageTemplate:
