@@ -392,6 +392,13 @@
   font-size: 1.2rem;
 }
 
+.invite-list__people-counts {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
 .admin-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -713,6 +720,11 @@
   background: var(--color-primrose);
   color: var(--color-moss);
   font-weight: 700;
+}
+
+.invite-card__count--dance {
+  background: #fdf5e6;
+  border: 1px solid var(--border-gold);
 }
 
 .invite-card__guests {

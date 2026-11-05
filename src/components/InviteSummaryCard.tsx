@@ -56,7 +56,11 @@ function InviteSummaryCard({ invitation, copied, copyError, onCopy, deleting, de
             {copyError && <span className="invite-list__copy-error" role="alert">No se pudo copiar el link.</span>}
           </div>
         </div>
-        <div className="invite-card__count" aria-label={`${confirmedGuests} confirmados`}>
+        <div
+          className={`invite-card__count ${invitation.danceOnly ? 'invite-card__count--dance' : ''}`}
+          aria-label={`${confirmedGuests} confirmados${invitation.danceOnly ? ' para baile' : ''}`}
+          title={invitation.danceOnly ? `${confirmedGuests} confirmados para baile` : `${confirmedGuests} confirmados`}
+        >
           {confirmedGuests}
         </div>
       </div>

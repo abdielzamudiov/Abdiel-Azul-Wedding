@@ -32,20 +32,47 @@ function CreateInvitePage() {
   const [deletingInvitationId, setDeletingInvitationId] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<{ invitationId: string; message: string } | null>(null)
 
-  const { respondedCount, pendingCount, danceOnlyCount, filteredInvitations } = useMemo(() => {
+  const {
+    respondedCount,
+    pendingCount,
+    danceOnlyCount,
+    filteredInvitations,
+    regularConfirmedInvites,
+    regularConfirmedAttendees,
+    danceConfirmedAttendees,
+    danceTotalPeople,
+    filteredRegularPeople,
+    filteredDancePeople,
+  } = useMemo(() => {
     const invitations = data?.invitations ?? []
     let responded = 0
     let pending = 0
     let danceOnly = 0
+
+    let regConfirmedInv = 0
+    let regConfirmedAtt = 0
+    let danceConfAtt = 0
+
+    let dncTotalPeople = 0
 
     const respondedList: AdminInvitation[] = []
     const pendingList: AdminInvitation[] = []
     const danceOnlyList: AdminInvitation[] = []
 
     for (const item of invitations) {
-      if (item.danceOnly) {
+      const isDance = Boolean(item.danceOnly)
+      const confirmedGuests = item.people.filter((p) => p.answered && p.attending).length
+
+      if (isDance) {
         danceOnly++
         danceOnlyList.push(item)
+        dncTotalPeople += item.people.length
+        danceConfAtt += confirmedGuests
+      } else {
+        regConfirmedAtt += confirmedGuests
+        if (item.status === 'confirmed') {
+          regConfirmedInv++
+        }
       }
 
       if (isInvitationResponded(item)) {
@@ -66,11 +93,27 @@ function CreateInvitePage() {
             ? danceOnlyList
             : invitations
 
+    let filtRegPeople = 0
+    let filtDncPeople = 0
+    for (const item of filtered) {
+      if (item.danceOnly) {
+        filtDncPeople += item.people.length
+      } else {
+        filtRegPeople += item.people.length
+      }
+    }
+
     return {
       respondedCount: responded,
       pendingCount: pending,
       danceOnlyCount: danceOnly,
       filteredInvitations: filtered,
+      regularConfirmedInvites: regConfirmedInv,
+      regularConfirmedAttendees: regConfirmedAtt,
+      danceConfirmedAttendees: danceConfAtt,
+      danceTotalPeople: dncTotalPeople,
+      filteredRegularPeople: filtRegPeople,
+      filteredDancePeople: filtDncPeople,
     }
   }, [data?.invitations, filter])
 
@@ -190,15 +233,15 @@ function CreateInvitePage() {
         <div className="admin-stats" aria-label="Resumen de confirmaciones">
           <div className="admin-stats__item">
             <span>Invitaciones confirmadas</span>
-            <strong>{loading ? '...' : data?.totalConfirmed ?? 0}</strong>
+            <strong>{loading ? '...' : regularConfirmedInvites}</strong>
           </div>
           <div className="admin-stats__item">
             <span>Asistentes confirmados</span>
-            <strong>{loading ? '...' : data?.totalAttendees ?? 0}</strong>
+            <strong>{loading ? '...' : regularConfirmedAttendees}</strong>
           </div>
           <div className="admin-stats__item">
-            <span>Solo Baile</span>
-            <strong>{loading ? '...' : danceOnlyCount}</strong>
+            <span>Confirmados Solo Baile</span>
+            <strong>{loading ? '...' : danceConfirmedAttendees}</strong>
           </div>
         </div>
 
@@ -247,7 +290,7 @@ function CreateInvitePage() {
               </button>
             </div>
 
-            <p className="invite-list__total">
+            <div className="invite-list__total">
               <span>
                 {filter === 'all' ? (
                   <>Total de invitaciones <strong>{data.invitations.length}</strong></>
@@ -256,14 +299,29 @@ function CreateInvitePage() {
                 ) : filter === 'pending' ? (
                   <>Invitaciones pendientes <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
                 ) : (
-                  <>Invitaciones solo baile <strong>{filteredInvitations.length}</strong> de <strong>{data.invitations.length}</strong></>
+                  <>Invitaciones solo baile <strong>{filteredInvitations.length}</strong> de <strong>{danceOnlyCount}</strong></>
                 )}
               </span>
-              <span>
-                Personas invitadas{' '}
-                <strong>{filteredInvitations.reduce((total, invitation) => total + invitation.people.length, 0)}</strong>
-              </span>
-            </p>
+              <div className="invite-list__people-counts">
+                {filter !== 'danceOnly' && (
+                  <span>
+                    Personas invitadas{' '}
+                    <strong>{filteredRegularPeople}</strong>
+                  </span>
+                )}
+                {danceTotalPeople > 0 && (filter === 'all' || filter === 'danceOnly') && (
+                  <span>
+                    Invitados a baile{' '}
+                    <strong>{filter === 'danceOnly' ? filteredDancePeople : danceTotalPeople}</strong>
+                  </span>
+                )}
+                {danceTotalPeople > 0 && filter !== 'all' && filter !== 'danceOnly' && filteredDancePeople > 0 && (
+                  <span>
+                    (más <strong>{filteredDancePeople}</strong> de baile)
+                  </span>
+                )}
+              </div>
+            </div>
 
             {filteredInvitations.length === 0 ? (
               <div className="admin-filter-empty">
